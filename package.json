@@ -1,0 +1,22 @@
+{
+  "name": "geekslides",
+  "version": "1.0.0",
+  "description": "",
+  "main": "GeekSlides.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TanyaJuravleva/GeekSlides.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TanyaJuravleva/GeekSlides/issues"
+  },
+  "homepage": "https://github.com/TanyaJuravleva/GeekSlides#readme",
+  "dependencies": {
+    "typescript": "^4.8.4"
+  }
+}

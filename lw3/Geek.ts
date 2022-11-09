@@ -2,7 +2,7 @@ type Presentation = {
     name: string,
     slides: Slide[],
     selectedCollection: Array<{
-        selectedSlideId: string,
+        selectedSlideId: string,h
         selectedElementsIds: string[],
     }>,
 };

@@ -1,3 +1,5 @@
+import React from 'react';
+
 type Presentation = {
     name: string,
     slides: Slide[],
@@ -35,7 +37,6 @@ type SlideElement = {
 };
 
 type TextElement = SlideElement & {
-    type: 'text',
     text: string,
     fontSize: number,
     color: string,
@@ -43,7 +44,6 @@ type TextElement = SlideElement & {
 };
 
 type PictureElement = SlideElement & {
-    type: 'picture',
     src: string,
 };
 
@@ -105,17 +105,7 @@ function findIndexSlideElementBySlide(slide: Slide, idElement: string): number /
     return slide.elementsList.findIndex( (element) => element.id === idElement)
 }
 
-function findIndexSlideTextFieldBySlide(slide: Slide, idElement: string): number //ВОЗВРАЩАЕТ ИНДЕКС ТЕКСТОВОГО ЭЛЕМЕНТА
-{
-    return slide.elementsList.findIndex( (element) => ((element.id === idElement) && (element.type = 'text')))
-}
-
 function findSlideElementByIndex(slide: Slide, index: number): TextElement | PictureElement | FigureElement //ВОЗВРАЩАЕТ ЭЛЕМЕНТ ПО ИНДЕКСУ
-{
-    return slide.elementsList[index]
-}
-
-function findSlideElementByInde(slide: Slide, index: number): TextElement//ВОЗВРАЩАЕТ ЭЛЕМЕНТ ПО ИНДЕКСУ
 {
     return slide.elementsList[index]
 }
@@ -159,23 +149,13 @@ function openPresentation(editor: Editor, src: string): void //ОТКРЫТИЕ 
 
 /* ФУНКЦИИ РАБОТЫ СО СЛАЙДОМ И ЕГО ЭЛЕМЕНТАМИ */
 
-function selectSlides(presentation: Presentation, ids: string[]): Presentation //ИЗМЕНЯЕТ ВЫДЕЛЕННЫЕ СЛАЙДЫ
-{
-    presentation.selectedCollection.splice(0, presentation.selectedCollection.length)
-    for(let i = 0; i < ids.length; i++)
-    {
-        let indexSlide = findIndexSlideById(presentation, ids[i]);
-        let slide = findSlideByIndex(presentation, indexSlide);
-        let idsElement:string[] = []
-        for (let i = 0; i < slide.elementsList.length; i++)
-        {
-            let id = slide.elementsList[i].id
-            idsElement.splice(idsElement.length, 0, id);
-        }
-        presentation.selectedCollection.splice(presentation.selectedCollection.length, 0, {selectedSlideId: ids[i], selectedElementsIds: idsElement})
-    }
-    return presentation
-}
+// function selectSlides(presentation: Presentation, ids: string[]): Presentation //ИЗМЕНЯЕТ ВЫДЕЛЕННЫЕ СЛАЙДЫ
+// {
+//     return {
+//         ...presentation,
+//         selectedSlidesId: ids
+//     }
+// }
 
 function addSlide(presentation: Presentation, newSlide: Slide): Presentation //ДОБАВЛЕНИЕ НОВОГО СЛАЙДА
 { 
@@ -197,34 +177,24 @@ function addSlide(presentation: Presentation, newSlide: Slide): Presentation //�
 //     }
 // }
 
-function deleteSlides(presentation: Presentation): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ СЛАЙДОВ
-{
-    let idsCollection = presentation.selectedCollection;
-    presentation = {
-        ...presentation,
-        slides: presentation.slides.filter((slide) => { 
-            let found = false;
-            for(let i = 0; i < idsCollection.length; i++)
-            {
-                if (slide.id = idsCollection[i].selectedSlideId)
-                {
-                    found = true;
-                    idsCollection.splice(i, 1)
-                    break
-                }
-            }
-            if (!found) 
-            {
-                return true
-            }
-            if (found) 
-            {
-                return false
-            }
-        }),
-    }
-    return presentation
-}
+// function deleteSlides(presentation: Presentation, ids: string[]): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ СЛАЙДОВ
+// {
+//     presentation = {
+//         ...presentation,
+//         slides: presentation.slides.filter((slide) => { 
+//             if (slide.id != ids[ids.length]) 
+//             {
+//                 return true
+//             }
+//             if (slide.id != ids[ids.length]) 
+//             {
+//                 ids.splice(ids.length, 1)
+//                 return false
+//             }
+//         }),
+//     }
+//     return selectSlides(presentation, [findSlideByIndex(presentation, presentation.slides.length).id])
+// }
 
 function douplicateSlide(presentation: Presentation, idSlide: string): Presentation //ДУБЛИРОАНИЕ СЛАЙДА
 {
@@ -242,13 +212,13 @@ function douplicateSlide(presentation: Presentation, idSlide: string): Presentat
 
 function selectSlideElements(presentation: Presentation, idSlide: string, ids: string[]): Presentation //ВЫДЕЛЕНИЕ ЭЛЕМЕНТОВ СЛАЙДА
 {
-    return {
-        ...presentation,
-        selectedCollection: [{
-            selectedSlideId: idSlide,
-            selectedElementsIds: ids,
-        }]
-    }
+    const indexSlide = findIndexSlideById(presentation, idSlide)
+    const slide = findSlideByIndex(presentation, indexSlide)
+    const changeSlide = {
+                            ...slide,
+                            selectedElementId: ids
+                        }
+    return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 }
 
 function addTextElement(presentation: Presentation, idSlide: string, newTextElement: TextElement): Presentation //ДОБАВЛЕНИЕ ТЕКСТОВОГО ЭЛЕМЕНТА НА СЛАЙД
@@ -307,73 +277,37 @@ function addFigureElement(presentation: Presentation, idSlide: string, newFigure
 //     // }
 // }
 
-function deleteElement(presentation: Presentation, idSlide: string): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ ЭЛЕМЕНТОВ СО СЛАЙДА
+function deleteElement(presentation: Presentation, idSlide: string, idsDeleteElements: string[]): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ ЭЛЕМЕНТОВ СО СЛАЙДА
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
-    let selectedCollection
-    for (let i = 0; i < presentation.selectedCollection.length; i++)
-    {
-        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
-        {
-            selectedCollection = presentation.selectedCollection[i];
-        }
-    }
     const changeSlide = { 
         ...slide,
         elementList: slide.elementsList.filter((element) => {
-            let found = false;
-            for(let i = 0; i < selectedCollection.selectedElementsIds.length; i++)
-            {
-                if (slide.id = selectedCollection.selectedElementsId[i])
-                {
-                    found = true;
-                    selectedCollection.selectedElementsId.splice(i, 1)
-                    break
-                }
-            }
-            if (!found) 
+            if (element.id != idsDeleteElements[idsDeleteElements.length]) 
             {
                 return true
             }
-            if (found) 
+            if (element.id != idsDeleteElements[idsDeleteElements.length]) 
             {
+                idsDeleteElements.splice(idsDeleteElements.length, 1)
                 return false
             }
-        }),
+        })
     }
-    return presentation
+
+    return selectSlideElements(presentation, idSlide, [])
 }
 
-function changeFontSize(presentation:Presentation, idSlide: string, size: number): Presentation // ИЗМЕНЕНИЕ РАЗМЕРА ШРИФТА ЭЛЕМЕНТА
+function changeFontSize(presentation:Presentation, idSlide: string, idTextField: string, size: number): Presentation // ИЗМЕНЕНИЕ РАЗМЕРА ШРИФТА ТЕКСТОВОГО ЭЛЕМЕНТА
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
-    let indexField
-    let textField:TextElement
-    let selectedObjectCollection
-    for (let i = 0; i < presentation.selectedCollection.length; i++)
-    {
-        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
-        {
-            selectedObjectCollection = presentation.selectedCollection[i];
-        }
-    }
-    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
-    {
-        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
-        slide.elementsList.filter((element) => (typeof element == TextElement))
-        textField = findSlideElementByIndex(slide, indexField)
-        if (textField.id = selectedObjectCollection.selectedElementsId[i])
-        {
-            if (textField.type = 'text')
-            {
-                textField = {
-                    ...textField,
-                    fontSize: size,
-                }
-            }
-        }
+    const indexField = findIndexSlideElementBySlide(slide, idTextField)
+    const textField = findSlideElementByIndex(slide, indexField)
+    const changeTextField = {
+        ...textField,
+        fontSize: size,
     }
     const changedSlide = {
         ...slide,
@@ -572,3 +506,5 @@ function changeTrianglePoints(presentation: Presentation, idSlide: string, idEle
 
         //filter true оставить false удалить
     //presentation.slides.splice(1,1)
+
+    export type { Presentation }

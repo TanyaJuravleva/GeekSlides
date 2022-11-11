@@ -1,5 +1,3 @@
-import React from 'react';
-
 type Presentation = {
     name: string,
     slides: Slide[],
@@ -40,7 +38,13 @@ type TextElement = SlideElement & {
     text: string,
     fontSize: number,
     color: string,
-    font: string,
+    fontFamily: string,
+    fillText: string,
+    fillField: string,
+    alignment: string,
+    bold: boolean,
+    italic: boolean,
+    underlined: boolean,
 };
 
 type PictureElement = SlideElement & {

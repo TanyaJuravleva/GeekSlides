@@ -39,7 +39,13 @@ const textElement = slideElement & {
     text: 'abc',
     fontSize: 25,
     color: '#fff',
-    font: 'Arial',
+    fontFamily: 'Arial',
+    fillText: 'yellow',
+    fillField: 'pink',
+    alignment: 'center',
+    bold: true,
+    italic: true,
+    underlined: true,
 }
 
 const pictureElement = slideElement & {

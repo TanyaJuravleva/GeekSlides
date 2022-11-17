@@ -1,13 +1,13 @@
 import React from 'react';
-import {Presentation} from "./lw3/Geek"
+import {Presen} from "./lw3/Types"
 //import logo from './logo.svg';
 //import './App.css';
 
 function App() {
   return (
-    <div>
-      <p></p>
-    </div>
+    <Presen
+      name='New Presentation'
+    ></Presen>
   );
 }
 

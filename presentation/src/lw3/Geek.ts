@@ -510,5 +510,3 @@ function changeTrianglePoints(presentation: Presentation, idSlide: string, idEle
 
         //filter true оставить false удалить
     //presentation.slides.splice(1,1)
-
-    export type { Presentation }

@@ -6,7 +6,7 @@ import {Presen} from "./lw3/Types"
 function App() {
   return (
     <Presen
-      name='New Presentation'
+      name='Муза - фея музыки'
     ></Presen>
   );
 }

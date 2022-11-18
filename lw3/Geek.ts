@@ -1,5 +1,6 @@
 type Presentation = {
     name: string,
+    logo: string,
     slides: Slide[],
     selectedCollection: Array<{
         selectedSlideId: string,
@@ -15,6 +16,7 @@ type Editor = {
 type Slide = {
     id: string,
     backgroundColor: string,
+    workSlide: boolean,
     elementsList: Array<TextElement|FigureElement|PictureElement>,
 };
 
@@ -39,7 +41,13 @@ type TextElement = SlideElement & {
     text: string,
     fontSize: number,
     color: string,
-    font: string,
+    fontFamily: string,
+    fillText: string, // заливка фона текста
+    fillField: string, // заливка текстового поля
+    alignment: string, // выравнивание (по левому краю, по правому краю, по центру) 
+    bold: boolean, 
+    italic: boolean,
+    underlined: boolean,
 };
 
 type PictureElement = SlideElement & {
@@ -363,7 +371,7 @@ function changeFontSize(presentation:Presentation, idSlide: string, size: number
     {
         indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
         slide.elementsList.filter((element) => (typeof element == TextElement))
-        textField = findSlideElementByIndex(slide, indexField)
+        textField = slide.elementsList[indexField]
         if (textField.id = selectedObjectCollection.selectedElementsId[i])
         {
             if (textField.type = 'text')

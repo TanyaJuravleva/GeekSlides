@@ -1,5 +1,8 @@
+import React from 'react'
+
 type Presentation = {
     name: string,
+    logo: string,
     slides: Slide[],
     selectedCollection: Array<{
         selectedSlideId: string,
@@ -15,6 +18,7 @@ type Editor = {
 type Slide = {
     id: string,
     backgroundColor: string,
+    workSlide: boolean,
     elementsList: Array<TextElement|FigureElement|PictureElement>,
 };
 

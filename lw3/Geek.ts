@@ -103,7 +103,7 @@ function presentationWithChangedSlide(presentation: Presentation, changeSlide: S
         slides:[
             ...presentation.slides.slice(0, indexSlide - 1),
             changeSlide,
-            ...presentation.slides.slice(indexSlide + 1, presentation.slides.length)
+            ...presentation.slides.slice(indexSlide + 1)
         ]
     }
 }
@@ -123,14 +123,9 @@ function findSlideElementByIndex(slide: Slide, index: number): TextElement | Pic
     return slide.elementsList[index]
 }
 
-function findSlideElementByInde(slide: Slide, index: number): TextElement//ВОЗВРАЩАЕТ ЭЛЕМЕНТ ПО ИНДЕКСУ
-{
-    return slide.elementsList[index]
-}
-
 /* ФУНКЦИИ РАБОТЫ С ЭДИТОРОМ И ПРЕЗЕНТАЦИЕЙ */
 
-function changePresentationName(editor: Editor, name: string): Editor //ИЗМЕНЯЕТ НАЗВАНИЕ ПРЕЗЕНТАЦИИ
+function changePresentationName(editor: Editor, name: string): Editor //ИЗМЕНЯЕТ НАЗВАНИЕ ПРЕЗЕНТАЦИИ +
 {
     return {
       ...editor,
@@ -141,7 +136,7 @@ function changePresentationName(editor: Editor, name: string): Editor //ИЗМЕ
     };
 }
 
-function stopDemonstration(editor: Editor): Editor //ПОКАЗ СЛАЙДОВ
+function stopDemonstration(editor: Editor): Editor //ПОКАЗ СЛАЙДОВ +
 {
     return {
       ...editor,
@@ -149,17 +144,17 @@ function stopDemonstration(editor: Editor): Editor //ПОКАЗ СЛАЙДОВ
     };
 }
 
-function savePresentation(editor: Editor): void //СОХРАНЕНИЕ ПРЕЗЕНТАЦИИ
+function savePresentation(editor: Editor): void //СОХРАНЕНИЕ ПРЕЗЕНТАЦИИ +
 {
     return 
 }
 
-function deletePresentation(editor: Editor) //УДАЛЕНИЕ ПРЕЗЕНТАЦИИ
+function deletePresentation(editor: Editor) //УДАЛЕНИЕ ПРЕЗЕНТАЦИИ +
 {
     return 
 }
 
-function openPresentation(editor: Editor, src: string): void //ОТКРЫТИЕ ПРЕЗЕНТАЦИИ
+function openPresentation(editor: Editor, src: string): void //ОТКРЫТИЕ ПРЕЗЕНТАЦИИ +
 {
     return 
 }
@@ -167,9 +162,9 @@ function openPresentation(editor: Editor, src: string): void //ОТКРЫТИЕ 
 
 /* ФУНКЦИИ РАБОТЫ СО СЛАЙДОМ И ЕГО ЭЛЕМЕНТАМИ */
 
-function selectSlides(presentation: Presentation, ids: string[]): Presentation //ИЗМЕНЯЕТ ВЫДЕЛЕННЫЕ СЛАЙДЫ
+function selectSlides(presentation: Presentation, ids: string[]): Presentation //ИЗМЕНЯЕТ ВЫДЕЛЕННЫЕ СЛАЙДЫ +
 {
-    presentation.selectedCollection.splice(0, presentation.selectedCollection.length)
+    presentation.selectedCollection = []
     for(let i = 0; i < ids.length; i++)
     {
         let indexSlide = findIndexSlideById(presentation, ids[i]);
@@ -185,7 +180,7 @@ function selectSlides(presentation: Presentation, ids: string[]): Presentation /
     return presentation
 }
 
-function addSlide(presentation: Presentation, newSlide: Slide): Presentation //ДОБАВЛЕНИЕ НОВОГО СЛАЙДА
+function addSlide(presentation: Presentation, newSlide: Slide): Presentation //ДОБАВЛЕНИЕ НОВОГО СЛАЙДА +
 { 
     return {
         ...presentation,
@@ -196,16 +191,7 @@ function addSlide(presentation: Presentation, newSlide: Slide): Presentation //�
     };
 }
 
-
-// function deleteSlide(presentation: Presentation, id: string): Presentation //УДАЛЕНИЕ СЛАЙДА
-// {
-//     return {
-//         ...presentation,
-//         slides: presentation.slides.filter((slide) => slide.id != id)
-//     }
-// }
-
-function deleteSlides(presentation: Presentation): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ СЛАЙДОВ
+function deleteSlides(presentation: Presentation): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ СЛАЙДОВ +
 {
     let idsCollection = presentation.selectedCollection;
     presentation = {
@@ -221,20 +207,13 @@ function deleteSlides(presentation: Presentation): Presentation //УДАЛЕНИ
                     break
                 }
             }
-            if (!found) 
-            {
-                return true
-            }
-            if (found) 
-            {
-                return false
-            }
+            return !found
         }),
     }
     return presentation
 }
 
-function douplicateSlide(presentation: Presentation, idSlide: string): Presentation //ДУБЛИРОАНИЕ СЛАЙДА
+function douplicateSlide(presentation: Presentation, idSlide: string): Presentation //ДУБЛИРОАНИЕ СЛАЙДА +
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -248,7 +227,7 @@ function douplicateSlide(presentation: Presentation, idSlide: string): Presentat
     };
 }
 
-function selectSlideElements(presentation: Presentation, idSlide: string, ids: string[]): Presentation //ВЫДЕЛЕНИЕ ЭЛЕМЕНТОВ СЛАЙДА
+function selectSlideElements(presentation: Presentation, idSlide: string, ids: string[]): Presentation //ВЫДЕЛЕНИЕ ЭЛЕМЕНТОВ СЛАЙДА +
 {
     return {
         ...presentation,
@@ -259,7 +238,7 @@ function selectSlideElements(presentation: Presentation, idSlide: string, ids: s
     }
 }
 
-function addTextElement(presentation: Presentation, idSlide: string, newTextElement: TextElement): Presentation //ДОБАВЛЕНИЕ ТЕКСТОВОГО ЭЛЕМЕНТА НА СЛАЙД
+function addTextElement(presentation: Presentation, idSlide: string, newTextElement: TextElement): Presentation //ДОБАВЛЕНИЕ ТЕКСТОВОГО ЭЛЕМЕНТА НА СЛАЙД +
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -273,7 +252,7 @@ function addTextElement(presentation: Presentation, idSlide: string, newTextElem
     return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 }
 
-function addPictureElement(presentation: Presentation, idSlide: string, newPictureElement: PictureElement): Presentation //ДОБАВЛЕНИЕ КАРТИНКИ НА СЛАЙД
+function addPictureElement(presentation: Presentation, idSlide: string, newPictureElement: PictureElement): Presentation //ДОБАВЛЕНИЕ КАРТИНКИ НА СЛАЙД +
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -286,7 +265,7 @@ function addPictureElement(presentation: Presentation, idSlide: string, newPictu
     }
     return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 }
-function addFigureElement(presentation: Presentation, idSlide: string, newFigureElement: FigureElement): Presentation //ДОБАВЛЕНИЕ ФИГУРЫ НА СЛАЙД
+function addFigureElement(presentation: Presentation, idSlide: string, newFigureElement: FigureElement): Presentation //ДОБАВЛЕНИЕ ФИГУРЫ НА СЛАЙД +
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -300,22 +279,7 @@ function addFigureElement(presentation: Presentation, idSlide: string, newFigure
     return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 }
 
-// function deleteElement(presentation: Presentation, idSlide: string, idDeleteElement: string): Presentation //УДАЛЕНИЕ ЭЛЕМЕНТА
-// {
-//     const indexSlide = findIndexSlideById(presentation, idSlide)
-//     const slide = findSlideByIndex(presentation, indexSlide)
-//     const changeSlide = {
-//         ...slide,
-//         elementsList: slide.elementsList.filter((element) => element.id != idDeleteElement)
-//     }
-//     return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
-//     // return {
-//     //     ...slide,
-//     //     elementsList: slide.elementsList.filter((element) => element.id != id)
-//     // }
-// }
-
-function deleteElement(presentation: Presentation, idSlide: string): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ ЭЛЕМЕНТОВ СО СЛАЙДА
+function deleteElement(presentation: Presentation, idSlide: string): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ ЭЛЕМЕНТОВ СО СЛАЙДА -
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -350,10 +314,10 @@ function deleteElement(presentation: Presentation, idSlide: string): Presentatio
             }
         }),
     }
-    return presentation
+    return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 }
 
-function changeFontSize(presentation:Presentation, idSlide: string, size: number): Presentation // ИЗМЕНЕНИЕ РАЗМЕРА ШРИФТА ЭЛЕМЕНТА
+function changeFontSize(presentation:Presentation, idSlide: string, size: number): Presentation // ИЗМЕНЕНИЕ РАЗМЕРА ШРИФТА ЭЛЕМЕНТА -
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -365,96 +329,128 @@ function changeFontSize(presentation:Presentation, idSlide: string, size: number
         if (presentation.selectedCollection[i].selectedSlideId = idSlide)
         {
             selectedObjectCollection = presentation.selectedCollection[i];
+            break
         }
     }
     for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
     {
         indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
-        slide.elementsList.filter((element) => (typeof element == TextElement))
-        textField = slide.elementsList[indexField]
-        if (textField.id = selectedObjectCollection.selectedElementsId[i])
-        {
-            if (textField.type = 'text')
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
             {
                 textField = {
                     ...textField,
                     fontSize: size,
                 }
             }
-        }
-    }
-    const changedSlide = {
-        ...slide,
-        elementsList: [
-            ...slide.elementsList,
-            changeTextField
-        ]
+        }        
     }
 
-    return presentationWithChangedSlide(presentation, changedSlide, indexSlide)
+    return presentation
 }
 
 function changeText(presentation:Presentation, idSlide: string, idTextField: string, newText: string): Presentation //ИЗМЕНЕНИЕ ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
-    const indexField = findIndexSlideElementBySlide(slide, idTextField)
-    const textField = findSlideElementByIndex(slide, indexField)
-    const changeTextField = {
-        ...textField,
-        text: newText
+    let indexField
+    let textField:TextElement
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
     }
-    const changedSlide = {
-        ...slide,
-        elementsList: [
-            ...slide.elementsList,
-            changeTextField
-        ]
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                textField = {
+                    ...textField,
+                    text: newText,
+                }
+            }
+        }        
     }
 
-    return presentationWithChangedSlide(presentation, changedSlide, indexSlide)
+    return presentation
 }
 
 function changeTextColor(presentation:Presentation, idSlide: string, idTextField: string, newColor: string): Presentation // ИЗМЕНЕНИЕ ЦВЕТА ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
-    const indexField = findIndexSlideElementBySlide(slide, idTextField)
-    const textField = findSlideElementByIndex(slide, indexField)
-    const changeTextField = {
-        ...textField,
-        color: newColor
+    let indexField
+    let textField:TextElement
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
     }
-    const changedSlide = {
-        ...slide,
-        elementsList: [
-            ...slide.elementsList,
-            changeTextField
-        ]
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                textField = {
+                    ...textField,
+                    color: newColor,
+                }
+            }
+        }        
     }
 
-    return presentationWithChangedSlide(presentation, changedSlide, indexSlide)
+    return presentation
 }
 
-function changeTextFont(presentation:Presentation, idSlide: string, idTextField: string, newFont: string): Presentation //ИЗМЕНЕНИЕ ШРИФТА ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА
+function changeTextFontFamily(presentation:Presentation, idSlide: string, idTextField: string, newFontFamily: string): Presentation //ИЗМЕНЕНИЕ ШРИФТА ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
-    const indexField = findIndexSlideElementBySlide(slide, idTextField)
-    const textField = findSlideElementByIndex(slide, indexField)
-    const changeTextField = {
-        ...textField,
-        font: newFont
+    let indexField
+    let textField:TextElement
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
     }
-    const changedSlide = {
-        ...slide,
-        elementsList: [
-            ...slide.elementsList,
-            changeTextField
-        ]
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                textField = {
+                    ...textField,
+                    fontFamily: newFontFamily,
+                }
+            }
+        }        
     }
 
-    return presentationWithChangedSlide(presentation, changedSlide, indexSlide)
+    return presentation
 }
 
 function changeSlideBackground(presentation: Presentation, idSlide: string, newBackgroundColor: string): Presentation // ИЗМЕНЕНИЕ ФОНА СЛАЙДА

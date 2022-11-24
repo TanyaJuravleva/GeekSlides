@@ -59,6 +59,8 @@ type FigureElement = Circle | Triangle | Rectangle;
 
 type BaseFigureElement = {
     id: string,
+    size: Size,
+    startingPoint: Coordinates,
     fillColor: string,
     borderWidth: number,
     borderColor: string,
@@ -68,7 +70,6 @@ type Circle = BaseFigureElement & {
     type: 'circle',
     radiusX: number,
     radiusY: number,
-    startingPoint: Coordinates,
 };
 
 type Triangle = BaseFigureElement & {
@@ -80,7 +81,6 @@ type Triangle = BaseFigureElement & {
 
 type Rectangle = BaseFigureElement & {
     type: 'rectangle',
-    startingPoint: Coordinates,
 };
 
 
@@ -279,7 +279,7 @@ function addFigureElement(presentation: Presentation, idSlide: string, newFigure
     return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 }
 
-function deleteElement(presentation: Presentation, idSlide: string): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ ЭЛЕМЕНТОВ СО СЛАЙДА -
+function deleteElement(presentation: Presentation, idSlide: string): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ ЭЛЕМЕНТОВ СО СЛАЙДА +-
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -317,7 +317,7 @@ function deleteElement(presentation: Presentation, idSlide: string): Presentatio
     return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 }
 
-function changeFontSize(presentation:Presentation, idSlide: string, size: number): Presentation // ИЗМЕНЕНИЕ РАЗМЕРА ШРИФТА ЭЛЕМЕНТА -
+function changeFontSize(presentation:Presentation, idSlide: string, size: number): Presentation // ИЗМЕНЕНИЕ РАЗМЕРА ШРИФТА ЭЛЕМЕНТА +-
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -344,14 +344,21 @@ function changeFontSize(presentation:Presentation, idSlide: string, size: number
                     ...textField,
                     fontSize: size,
                 }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == textField.id)
+                    {
+                        slide.elementsList[j] = textField
+                    }
+                }
             }
-        }        
+        }      
     }
 
     return presentation
 }
 
-function changeText(presentation:Presentation, idSlide: string, idTextField: string, newText: string): Presentation //ИЗМЕНЕНИЕ ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА
+function changeText(presentation:Presentation, idSlide: string, idTextField: string, newText: string): Presentation //ИЗМЕНЕНИЕ ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА +-
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -379,13 +386,20 @@ function changeText(presentation:Presentation, idSlide: string, idTextField: str
                     text: newText,
                 }
             }
+            for(let j = 0; j < slide.elementsList.length; j++)
+            {
+                if (slide.elementsList[j].id == textField.id)
+                {
+                    slide.elementsList[j] = textField
+                }
+            }
         }        
     }
 
     return presentation
 }
 
-function changeTextColor(presentation:Presentation, idSlide: string, idTextField: string, newColor: string): Presentation // ИЗМЕНЕНИЕ ЦВЕТА ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА
+function changeTextColor(presentation:Presentation, idSlide: string, idTextField: string, newColor: string): Presentation // ИЗМЕНЕНИЕ ЦВЕТА ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА +-
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -412,6 +426,13 @@ function changeTextColor(presentation:Presentation, idSlide: string, idTextField
                     ...textField,
                     color: newColor,
                 }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == textField.id)
+                    {
+                        slide.elementsList[j] = textField
+                    }
+                }
             }
         }        
     }
@@ -419,7 +440,7 @@ function changeTextColor(presentation:Presentation, idSlide: string, idTextField
     return presentation
 }
 
-function changeTextFontFamily(presentation:Presentation, idSlide: string, idTextField: string, newFontFamily: string): Presentation //ИЗМЕНЕНИЕ ШРИФТА ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА
+function changeTextFontFamily(presentation:Presentation, idSlide: string, idTextField: string, newFontFamily: string): Presentation //ИЗМЕНЕНИЕ ШРИФТА ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА +-
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -446,6 +467,13 @@ function changeTextFontFamily(presentation:Presentation, idSlide: string, idText
                     ...textField,
                     fontFamily: newFontFamily,
                 }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == textField.id)
+                    {
+                        slide.elementsList[j] = textField
+                    }
+                }
             }
         }        
     }
@@ -453,7 +481,7 @@ function changeTextFontFamily(presentation:Presentation, idSlide: string, idText
     return presentation
 }
 
-function changeSlideBackground(presentation: Presentation, idSlide: string, newBackgroundColor: string): Presentation // ИЗМЕНЕНИЕ ФОНА СЛАЙДА
+function changeSlideBackground(presentation: Presentation, idSlide: string, newBackgroundColor: string): Presentation // ИЗМЕНЕНИЕ ФОНА СЛАЙДА +-
 {
     const indexSlide = findIndexSlideById(presentation,idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
@@ -465,91 +493,162 @@ function changeSlideBackground(presentation: Presentation, idSlide: string, newB
     return presentationWithChangedSlide(presentation, changedSlide, indexSlide)
 }
 
-function changeSlideElementSize(presentation: Presentation, idSlide: string, idElement: string, newSize: Size): Presentation // ИЗМЕНЕНИЕ РАЗМЕРА ЭЛЕМЕНТА СЛАЙДА
+function changeSlideElementSize(presentation: Presentation, idSlide: string, newSize: Size): Presentation // ИЗМЕНЕНИЕ РАЗМЕРА выделенных ЭЛЕМЕНТов СЛАЙДА +-
 {
     const indexSlide = findIndexSlideById(presentation,idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
-    const indexSlideElement = findIndexSlideElementBySlide(slide, idElement)
-    const slideElement = findSlideElementByIndex(slide, indexSlideElement)
-    const changedSlideElement = {
-        ...slideElement,
-        size: newSize
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
     }
-    const changedSlide = {
-        ...slide,
-        elementsList: [
-            ...slide.elementsList,
-            changedSlideElement
-        ]
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        let indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        let element = slide.elementsList[indexField]
+        if (element.id = selectedObjectCollection.selectedElementsId[i])
+        {
+            element = {
+                ...element,
+                size: newSize,
+            }
+            for(let j = 0; j < slide.elementsList.length; j++)
+            {
+                if (slide.elementsList[j].id == element.id)
+                {
+                    slide.elementsList[j] = element
+                }
+            }
+        }     
     }
 
-    return presentationWithChangedSlide(presentation, changedSlide, indexSlide)
+    return presentation
 }
 
-function changeSlideElementStartingPoints(presentation: Presentation, idSlide: string, idElement: string, newStartingPoint: Coordinates): Presentation //ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ ЭЛЕМЕНТА СЛАЙДА; ПЕРЕМЕЩЕНИЕ ЭЛЕМЕНТА
+function changeSlideElementStartingPoints(presentation: Presentation, idSlide: string, newStartingPoint: Coordinates): Presentation //+- ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ ЭЛЕМЕНТА СЛАЙДА; ПЕРЕМЕЩЕНИЕ ЭЛЕМЕНТА
 {
     const indexSlide = findIndexSlideById(presentation,idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
-    const indexSlideElement = findIndexSlideElementBySlide(slide, idElement)
-    const slideElement = findSlideElementByIndex(slide, indexSlideElement)
-    const changedSlideElement = {
-        ...slideElement,
-        startingPoint: newStartingPoint
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
     }
-    const changedSlide = {
-        ...slide,
-        elementsList: [
-            ...slide.elementsList,
-            changedSlideElement
-        ]
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        let indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        let element = slide.elementsList[indexField]
+        if (element.id = selectedObjectCollection.selectedElementsId[i])
+        {
+            element = {
+                ...element,
+                startingPoint: newStartingPoint,
+            }
+            for(let j = 0; j < slide.elementsList.length; j++)
+            {
+                if (slide.elementsList[j].id == element.id)
+                {
+                    slide.elementsList[j] = element
+                }
+            }
+        }     
     }
 
-    return presentationWithChangedSlide(presentation, changedSlide, indexSlide)
+    return presentation
 }
 
-function changeCircleRadius(presentation: Presentation, idSlide: string, idElement: string, size: Size): Presentation //ИЗМЕНЕНИЯ РАДИУСА КРУГА
+function changeCircleRadius(presentation: Presentation, idSlide: string, newRadiusX: number, newRadiusY: number): Presentation //+- ИЗМЕНЕНИЯ РАДИУСА КРУГА
 {
-    const indexSlide = findIndexSlideById(presentation,idSlide)
+    const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
-    const indexSlideElement = findIndexSlideElementBySlide(slide, idElement)
-    const slideElement = findSlideElementByIndex(slide, indexSlideElement)
-    const changedSlideElement = {
-        ...slideElement,
-        radiusX: size.width / 2,
-        radiusY: size.height / 2,
+    let indexField
+    let circleFigure:Circle
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
     }
-    const changedSlide = {
-        ...slide,
-        elementsList: [
-            ...slide.elementsList,
-            changedSlideElement
-        ]
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'circle') {
+            circleFigure = element
+            if (circleFigure.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                circleFigure = {
+                    ...circleFigure,
+                    radiusX: newRadiusX,
+                    radiusY: newRadiusY
+                }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == circleFigure.id)
+                    {
+                        slide.elementsList[j] = circleFigure
+                    }
+                }
+            }
+        }        
     }
 
-    return presentationWithChangedSlide(presentation, changedSlide, indexSlide)
+    return presentation
 }
 
-function changeTrianglePoints(presentation: Presentation, idSlide: string, idElement: string, size: Size): Presentation //ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ ВЕРШИН ТРЕУГОЛЬНИКА
+//+-
+function changeTrianglePoints(presentation: Presentation, idSlide: string, newPointOne: Coordinates, newPointTwo: Coordinates, newPointThree: Coordinates): Presentation //ИЗМЕНЕНИЕ ПОЛОЖЕНИЯ ВЕРШИН ТРЕУГОЛЬНИКА
 {
-    const indexSlide = findIndexSlideById(presentation,idSlide)
+    const indexSlide = findIndexSlideById(presentation, idSlide)
     const slide = findSlideByIndex(presentation, indexSlide)
-    const indexSlideElement = findIndexSlideElementBySlide(slide, idElement)
-    const slideElement = findSlideElementByIndex(slide, indexSlideElement)
-    const changedSlideElement = {
-        ...slideElement,
-        pointOne: {x: size.width / 2, y: 0},
-        pointTwo: {x: 0, y: size.height},
-        pointThree: {x: size.width, y: size.height},
+    let indexField
+    let triangleFigure:Triangle
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
     }
-    const changedSlide = {
-        ...slide,
-        elementsList: [
-            ...slide.elementsList,
-            changedSlideElement
-        ]
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'triangle') {
+            triangleFigure = element
+            if (triangleFigure.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                triangleFigure = {
+                    ...triangleFigure,
+                    pointOne: newPointOne,
+                    pointTwo: newPointTwo,
+                    pointThree: newPointThree
+                }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == triangleFigure.id)
+                    {
+                        slide.elementsList[j] = triangleFigure
+                    }
+                }
+            }
+        }        
     }
 
-    return presentationWithChangedSlide(presentation, changedSlide, indexSlide)
+    return presentation
 }
 
 // function changeCircleRadius(circle: Circle, size: Size): Circle

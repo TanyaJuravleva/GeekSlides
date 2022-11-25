@@ -317,6 +317,7 @@ function deleteElement(presentation: Presentation, idSlide: string): Presentatio
     return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 }
 
+//иммутабельно передавать presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 function changeFontSize(presentation:Presentation, idSlide: string, size: number): Presentation // ИЗМЕНЕНИЕ РАЗМЕРА ШРИФТА ЭЛЕМЕНТА +-
 {
     const indexSlide = findIndexSlideById(presentation, idSlide)

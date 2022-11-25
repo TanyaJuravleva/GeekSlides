@@ -481,6 +481,252 @@ function changeTextFontFamily(presentation:Presentation, idSlide: string, idText
     return presentation
 }
 
+function changeFillText(presentation:Presentation, idSlide: string, idTextField: string, newFillText: string): Presentation // ИЗМЕНЕНИЕ ЦВЕТА ЗАЛИВКИ ТЕКСТА ТЕКСТОВОГО ЭЛЕМЕНТА +-
+{
+    const indexSlide = findIndexSlideById(presentation, idSlide)
+    const slide = findSlideByIndex(presentation, indexSlide)
+    let indexField
+    let textField:TextElement
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
+    }
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                textField = {
+                    ...textField,
+                    fillText: newFillText,
+                }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == textField.id)
+                    {
+                        slide.elementsList[j] = textField
+                    }
+                }
+            }
+        }        
+    }
+
+    return presentation
+}
+
+function changeFillTextField(presentation:Presentation, idSlide: string, idTextField: string, newFillField: string): Presentation // ИЗМЕНЕНИЕ ЦВЕТА ЗАЛИВКИ ТЕКСТОВОГО ЭЛЕМЕНТА +-
+{
+    const indexSlide = findIndexSlideById(presentation, idSlide)
+    const slide = findSlideByIndex(presentation, indexSlide)
+    let indexField
+    let textField:TextElement
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
+    }
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                textField = {
+                    ...textField,
+                    fillField: newFillField,
+                }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == textField.id)
+                    {
+                        slide.elementsList[j] = textField
+                    }
+                }
+            }
+        }        
+    }
+
+    return presentation
+}
+
+function changeTextBold(presentation:Presentation, idSlide: string, isBold: boolean): Presentation
+{
+    const indexSlide = findIndexSlideById(presentation, idSlide)
+    const slide = findSlideByIndex(presentation, indexSlide)
+    let indexField
+    let textField:TextElement
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
+    }
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                textField = {
+                    ...textField,
+                    bold: isBold,
+                }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == textField.id)
+                    {
+                        slide.elementsList[j] = textField
+                    }
+                }
+            }
+        }      
+    }
+
+    return presentation
+}
+
+function changeTextItalic(presentation:Presentation, idSlide: string, isItalic: boolean): Presentation
+{
+    const indexSlide = findIndexSlideById(presentation, idSlide)
+    const slide = findSlideByIndex(presentation, indexSlide)
+    let indexField
+    let textField:TextElement
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
+    }
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                textField = {
+                    ...textField,
+                    italic: isItalic,
+                }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == textField.id)
+                    {
+                        slide.elementsList[j] = textField
+                    }
+                }
+            }
+        }      
+    }
+
+    return presentation
+}
+
+function changeTextUnderlined(presentation:Presentation, idSlide: string, isUnderlined: boolean): Presentation
+{
+    const indexSlide = findIndexSlideById(presentation, idSlide)
+    const slide = findSlideByIndex(presentation, indexSlide)
+    let indexField
+    let textField:TextElement
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
+    }
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                textField = {
+                    ...textField,
+                    underlined: isUnderlined,
+                }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == textField.id)
+                    {
+                        slide.elementsList[j] = textField
+                    }
+                }
+            }
+        }      
+    }
+
+    return presentation
+}
+
+function changeTextAlignment(presentation:Presentation, idSlide: string, newAlignment: string): Presentation // ИЗМЕНЕНИЕ ВЫРАВНИВАНИЯ ТЕКСТА +-
+{
+    const indexSlide = findIndexSlideById(presentation, idSlide)
+    const slide = findSlideByIndex(presentation, indexSlide)
+    let indexField
+    let textField:TextElement
+    let selectedObjectCollection
+    for (let i = 0; i < presentation.selectedCollection.length; i++)
+    {
+        if (presentation.selectedCollection[i].selectedSlideId = idSlide)
+        {
+            selectedObjectCollection = presentation.selectedCollection[i];
+            break
+        }
+    }
+    for(let i = 0; i < selectedObjectCollection.selectedElementsId.length; i++)
+    {
+        indexField = findIndexSlideTextFieldBySlide(slide, idSlide)
+        const element = slide.elementsList[indexField]
+        if (element.type === 'text') {
+            textField = element
+            if (textField.id = selectedObjectCollection.selectedElementsId[i])
+            {
+                textField = {
+                    ...textField,
+                    alignment: newAlignment,
+                }
+                for(let j = 0; j < slide.elementsList.length; j++)
+                {
+                    if (slide.elementsList[j].id == textField.id)
+                    {
+                        slide.elementsList[j] = textField
+                    }
+                }
+            }
+        }      
+    }
+
+    return presentation
+}
+
 function changeSlideBackground(presentation: Presentation, idSlide: string, newBackgroundColor: string): Presentation // ИЗМЕНЕНИЕ ФОНА СЛАЙДА +-
 {
     const indexSlide = findIndexSlideById(presentation,idSlide)

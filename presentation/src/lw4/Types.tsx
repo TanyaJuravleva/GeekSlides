@@ -5,12 +5,85 @@ type Presentation = {
     name: string,
     logo: string,
     slides: Slide[],
+    selectedCollection: Array<{
+        selectedSlideId: string,
+        selectedElementsIds: string[],
+    }>,
+};
+
+type Editor = {
+    presentation: Presentation,
+    isPreview: boolean,
 };
 
 type Slide = {
     id: string,
     backgroundColor: string,
     workSlide: boolean,
+    elementsList: Array<TextElement|FigureElement|PictureElement>,
+};
+
+type Coordinates = {
+    x: number,
+    y: number,
+};
+
+type Size = {
+    width: number,
+    height: number,
+};
+
+type SlideElement = {
+    id: string,
+    startingPoint: Coordinates,
+    size: Size,
+};
+
+type TextElement = SlideElement & {
+    type: 'text',
+    text: string,
+    fontSize: number,
+    color: string,
+    fontFamily: string,
+    fillText: string, // заливка фона текста
+    fillField: string, // заливка текстового поля
+    alignment: string, // выравнивание (по левому краю, по правому краю, по центру) 
+    bold: boolean, 
+    italic: boolean,
+    underlined: boolean,
+};
+
+type PictureElement = SlideElement & {
+    type: 'picture',
+    src: string,
+};
+
+type FigureElement = Circle | Triangle | Rectangle;
+
+type BaseFigureElement = {
+    id: string,
+    size: Size,
+    startingPoint: Coordinates,
+    fillColor: string,
+    borderWidth: number,
+    borderColor: string,
+}
+
+type Circle = BaseFigureElement & {
+    type: 'circle',
+    radiusX: number,
+    radiusY: number,
+};
+
+type Triangle = BaseFigureElement & {
+    type: 'triangle',
+    pointOne: Coordinates,
+    pointTwo: Coordinates,
+    pointThree: Coordinates,
+}
+
+type Rectangle = BaseFigureElement & {
+    type: 'rectangle',
 };
 
 function PresentationSlide(props: Slide) {
@@ -20,6 +93,7 @@ function PresentationSlide(props: Slide) {
     return (
         <div className='Slide' style={SlideStyle} key={props.id}>
             <p>{props.workSlide}</p>
+            <div>{props.elementsList}</div>
         </div>
     )
 }
@@ -42,6 +116,7 @@ function PresentationPreviw(props: Presentation) {
             id={slide.id}
             backgroundColor={slide.backgroundColor}
             workSlide={slide.workSlide}
+            elementsList={slide.elementsList}
         ></PresentationSlide>
     )
     const workSlide = Slides.map((slide) => 
@@ -49,6 +124,7 @@ function PresentationPreviw(props: Presentation) {
             id={slide.id}
             backgroundColor={slide.backgroundColor}
             workSlide={slide.workSlide}
+            elementsList={slide.elementsList}
         ></WorkSlide> : null
     )
     return (

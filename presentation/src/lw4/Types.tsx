@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import './Types.css';
 
 type Presentation = {
@@ -93,7 +93,50 @@ function PresentationSlide(props: Slide) {
     return (
         <div className='Slide' style={SlideStyle} key={props.id}>
             <p>{props.workSlide}</p>
-            <div>{props.elementsList}</div>
+        </div>
+    )
+}
+
+function TextElement(props:TextElement) {
+    let Bold
+    let Underlined
+    let Italic
+    if (props.bold)
+    {
+        Bold = {
+            fontWeight: "bold"
+        }
+    }
+    if (props.underlined)
+    {
+        Underlined = {
+            textDecoration: "underline"
+        }
+    }
+    if (props.italic)
+    {
+        Italic = {
+            fontStyle: "italic"
+        }
+    }
+    const WorkTextStyle = Bold && Underlined && Italic && {
+        fontSize: props.fontSize,
+        color: props.color,
+        fontFamily: props.fontFamily,
+        background: props.fillField,
+        textalign: props.alignment,
+        x: props.startingPoint.x,
+        y:props.startingPoint.y,
+        width: props.size.width,
+        height: props.size.height
+    }
+    const WorkText = {
+        background:props.fillText
+    }
+    return (
+        <div id={props.id} style={WorkTextStyle}>
+            <p style={WorkText}>{props.text}</p>
+            <div>{props.type}</div>
         </div>
     )
 }
@@ -102,23 +145,65 @@ function WorkSlide(props: Slide) {
     const WorkSlideStyle = {
         background: props.backgroundColor
     }
+    let ElementsArray:Array<any> = []
+    let textField:TextElement
+    if (props.elementsList)
+    {
+        for (let i = 0; i < props.elementsList.length; i++)
+        {
+            let element = props.elementsList[i];
+            if (element.type == "text")
+            {
+                textField = element;
+                ElementsArray.push(
+                <TextElement
+                    text={textField.text}
+                    fontSize={textField.fontSize}
+                    color={textField.color}
+                    fontFamily={textField.fontFamily}
+                    id={textField.id}
+                    size={textField.size}
+                    startingPoint={textField.startingPoint}
+                    type={textField.type}
+                    fillText={textField.fillText}
+                    fillField={textField.fillField}
+                    alignment={textField.alignment}
+                    bold={textField.bold}
+                    italic={textField.italic}
+                    underlined={textField.underlined}
+                ></TextElement>)
+            }
+            if (props.elementsList[i].type == "picture")
+            {
+                
+            }
+            if (props.elementsList[i].type == "circle")
+            {
+                
+            }
+        }
+    }
+    const workSlide = ElementsArray.map((element) => 
+        element
+    )
     return (
         <div className='WorkSlide' style={WorkSlideStyle} key={props.id}>
             <p>{props.workSlide}</p>
+            {workSlide}
         </div>
     )
 }
 
 function PresentationPreviw(props: Presentation) {
     const Slides:Array<Slide> = props.slides;
-    const SlidesList = Slides.map((slide) =>
-        <PresentationSlide
-            id={slide.id}
-            backgroundColor={slide.backgroundColor}
-            workSlide={slide.workSlide}
-            elementsList={slide.elementsList}
-        ></PresentationSlide>
-    )
+    // const SlidesList = Slides.map((slide) =>
+    //     <PresentationSlide
+    //         id={slide.id}
+    //         backgroundColor={slide.backgroundColor}
+    //         workSlide={slide.workSlide}
+    //         elementsList={slide.elementsList}
+    //     ></PresentationSlide>
+    // )
     const workSlide = Slides.map((slide) => 
         (slide.workSlide === true) ? <WorkSlide
             id={slide.id}
@@ -134,9 +219,9 @@ function PresentationPreviw(props: Presentation) {
                 <p className='PreviewHeader'>{props.name}</p>
             </div>
             <div className='WorkArea'>
-                <div className='SlidesList'>
+                {/* <div className='SlidesList'>
                     {SlidesList}
-                </div>
+                </div> */}
                 {workSlide}
             </div>
         </div>

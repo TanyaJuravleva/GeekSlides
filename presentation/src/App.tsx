@@ -1,15 +1,21 @@
 import React from 'react';
-import {PresentationPreviw} from "./lw4/Types"
+import {PresentationPreview, Slide} from "./lw4/Types"
+import {PictureElement} from "./lw4/Types"
+import {TextElement} from "./lw4/Types"
+import {Circle} from "./lw4/Types"
+import {Rectangle} from "./lw4/Types"
+import {Triangle} from "./lw4/Types"
 import logo from './logo.svg';
+import cat from './cat.jpg'
 import { serialize } from 'v8';
 
-const textField = {
+const textField:TextElement = {
   id: 'text1',
   type: 'text',
   startingPoint: {x: 2, y: 50},
   size: {width: 200, height: 300},
   text: 'Заголовок',
-  fontSize: 14,
+  fontSize: 36,
   color: 'green',
   fontFamily: 'Roboto',
   fillText: 'red', // заливка фона текста
@@ -20,19 +26,18 @@ const textField = {
   underlined: true,
 }
 
-const pictureField = {
+const pictureField:PictureElement = {
   id: 'picture1',
   type: 'picture',
-  src: 'img/cat.png',
+  src: cat,
   startingPoint: {x: 30, y: 50},
-  size: {width: 300, height: 400},
+  size: {width: 400, height: 400},
 }
 
-const Circle = {
+const circle:Circle = {
   id: 'circle1',
-  size: {width: 30, height: 40},
-  startingPoint: {x: 4, y: 60},
-  fillColor: 'pink',
+  startingPoint: {x: 70, y: 60},
+  fillColor: 'red',
   borderWidth: 20,
   borderColor: 'grey',
   type: 'circle',
@@ -40,9 +45,8 @@ const Circle = {
   radiusY: 40,
 }
 
-const Triangle = {
+const triangle:Triangle = {
   id: 'triangle1',
-  size: {width: 30, height: 40},
   startingPoint: {x: 40, y: 59},
   fillColor: 'purple',
   borderWidth: 30,
@@ -53,7 +57,7 @@ const Triangle = {
   pointThree: {x: 40, y: 59},
 }
 
-const Rectangle = {
+const rectangle:Rectangle = {
   id: 'rectangle1',
   size: {width: 30, height: 40},
   startingPoint: {x: 40, y: 59},
@@ -63,20 +67,37 @@ const Rectangle = {
   type: 'rectangle',
 }
 
+const elements = [textField, pictureField, circle, triangle, rectangle]
+
+const slide1:Slide = {id: '2', backgroundColor:'blue', workSlide: true, elementsList: elements}
+const slide2:Slide = {id: '1', backgroundColor:'red', workSlide: false, elementsList: []}
+const slide3:Slide = {id: '3', backgroundColor:'green', workSlide: false, elementsList: []}
+
 const slidesList = [
-  {id: '1', backgroundColor:'red', workSlide: false, elementList: []},
-  {id: '2', backgroundColor:'blue', workSlide: true, elementList: [pictureField, textField, Circle, Triangle, Rectangle]},
-  {id: '3', backgroundColor:'green', workSlide: false, elementList: []},
+  slide1, slide2, slide3
 ];
+
+const CollectionSlides = [
+  {selectedSlideId: '1', selectedElementsIds: ['1', '2', '3']}
+]
 
 function App() {
   return (
-    <PresentationPreviw
+    <PresentationPreview
       name='My Presentation'
       logo={logo}
       slides={slidesList}
-    ></PresentationPreviw>
+      selectedCollection={CollectionSlides}
+    ></PresentationPreview>
   );
 }
 
 export default App;
+
+
+{/* <WorkSlide
+id='1'
+backgroundColor='green'
+workSlide={true}
+elementsList={elements}
+></WorkSlide> */}

@@ -20,7 +20,7 @@ type Slide = {
     id: string,
     backgroundColor: string,
     workSlide: boolean,
-    elementsList: Array<TextElement|FigureElement|PictureElement>,
+    elementsList: Array<TextElement|PictureElement|Circle|Rectangle|Triangle>
 };
 
 type Coordinates = {
@@ -62,7 +62,6 @@ type FigureElement = Circle | Triangle | Rectangle;
 
 type BaseFigureElement = {
     id: string,
-    size: Size,
     startingPoint: Coordinates,
     fillColor: string,
     borderWidth: number,
@@ -84,6 +83,7 @@ type Triangle = BaseFigureElement & {
 
 type Rectangle = BaseFigureElement & {
     type: 'rectangle',
+    size: Size,
 };
 
 function PresentationSlide(props: Slide) {
@@ -119,7 +119,7 @@ function TextElement(props:TextElement) {
             fontStyle: "italic"
         }
     }
-    const WorkTextStyle = Bold && Underlined && Italic && {
+    const WorkTextStyle = {
         fontSize: props.fontSize,
         color: props.color,
         fontFamily: props.fontFamily,
@@ -130,14 +130,57 @@ function TextElement(props:TextElement) {
         width: props.size.width,
         height: props.size.height
     }
-    const WorkText = {
+    const WorkText = Bold && Underlined && Italic && {
         background:props.fillText
     }
     return (
         <div id={props.id} style={WorkTextStyle}>
             <p style={WorkText}>{props.text}</p>
-            <div>{props.type}</div>
         </div>
+    )
+}
+
+function PictureElement(props:PictureElement) {
+    return (
+        <div id={props.id}>
+           <img src={props.src} width={props.size.width} height={props.size.height}></img>
+        </div>
+    )
+}
+
+function Circle(props:Circle) {
+    return (
+        <svg>
+            <ellipse rx={props.radiusX} ry={props.radiusY} cx={props.startingPoint.x} cy={props.startingPoint.y}
+                    transform={"rotate(-65, 98, 94)"}
+                    stroke-opacity={0.5}
+                    stroke={props.borderColor}
+                    fill={props.fillColor}
+            ></ellipse>
+        </svg>
+    )
+}
+
+function Triangle(props:Triangle) {
+    return (
+        <svg>
+            <polygon
+                points="{props.pointOne}, {props.pointTwo}, {props.pointThree}"
+            />
+        </svg>
+    )
+}
+
+function Rectangle(props:Rectangle) {
+    return (
+        <svg>
+            <rect
+                width={props.size.width}
+                height={props.size.height}
+                x={props.startingPoint.x}
+                y={props.startingPoint.y}
+            ></rect>
+        </svg>
     )
 }
 
@@ -147,6 +190,10 @@ function WorkSlide(props: Slide) {
     }
     let ElementsArray:Array<any> = []
     let textField:TextElement
+    let pictureField:PictureElement
+    let circleField:Circle
+    let triangleField:Triangle
+    let rectangleField:Rectangle
     if (props.elementsList)
     {
         for (let i = 0; i < props.elementsList.length; i++)
@@ -159,12 +206,12 @@ function WorkSlide(props: Slide) {
                 <TextElement
                     text={textField.text}
                     fontSize={textField.fontSize}
-                    color={textField.color}
-                    fontFamily={textField.fontFamily}
                     id={textField.id}
                     size={textField.size}
                     startingPoint={textField.startingPoint}
                     type={textField.type}
+                    color={textField.color}
+                    fontFamily={textField.fontFamily}
                     fillText={textField.fillText}
                     fillField={textField.fillField}
                     alignment={textField.alignment}
@@ -173,13 +220,66 @@ function WorkSlide(props: Slide) {
                     underlined={textField.underlined}
                 ></TextElement>)
             }
-            if (props.elementsList[i].type == "picture")
+            if (element.type == "picture")
             {
-                
+                pictureField = element;
+                ElementsArray.push(
+                    <PictureElement
+                        id={pictureField.id}
+                        type={pictureField.type}
+                        src={pictureField.src}
+                        startingPoint={pictureField.startingPoint}
+                        size={pictureField.size}
+                    ></PictureElement>
+                )
             }
-            if (props.elementsList[i].type == "circle")
+            if (element.type == "circle")
             {
-                
+                circleField = element;
+                ElementsArray.push(
+                    <Circle
+                    id={circleField.id}
+                    type={circleField.type}
+                    radiusX={circleField.radiusX}
+                    radiusY={circleField.radiusY}
+                    startingPoint={circleField.startingPoint}
+                    fillColor={circleField.fillColor}
+                    borderColor={circleField.borderColor}
+                    borderWidth={circleField.borderWidth}
+                    ></Circle>
+                )
+            }
+            if (element.type == "triangle")
+            {
+                triangleField = element;
+                ElementsArray.push(
+                    <Triangle
+                        id={triangleField.id}
+                        pointOne={triangleField.pointOne}
+                        pointTwo={triangleField.pointTwo}
+                        pointThree={triangleField.pointThree}
+                        startingPoint={triangleField.startingPoint}
+                        type={triangleField.type}
+                        fillColor={triangleField.fillColor}
+                        borderColor={triangleField.borderColor}
+                        borderWidth={triangleField.borderWidth}
+                    ></Triangle>
+                )
+            }
+            if (element.type == "rectangle")
+            {
+                rectangleField = element;
+                ElementsArray.push(
+                    <Rectangle
+                        id={rectangleField.id}
+                        startingPoint={rectangleField.startingPoint}
+                        type={rectangleField.type}
+                        size={rectangleField.size}
+                        fillColor={rectangleField.fillColor}
+                        borderColor={rectangleField.borderColor}
+                        borderWidth={rectangleField.borderWidth}
+                    ></Rectangle>
+                )
             }
         }
     }
@@ -194,16 +294,8 @@ function WorkSlide(props: Slide) {
     )
 }
 
-function PresentationPreviw(props: Presentation) {
+function PresentationPreview(props: Presentation) {
     const Slides:Array<Slide> = props.slides;
-    // const SlidesList = Slides.map((slide) =>
-    //     <PresentationSlide
-    //         id={slide.id}
-    //         backgroundColor={slide.backgroundColor}
-    //         workSlide={slide.workSlide}
-    //         elementsList={slide.elementsList}
-    //     ></PresentationSlide>
-    // )
     const workSlide = Slides.map((slide) => 
         (slide.workSlide === true) ? <WorkSlide
             id={slide.id}
@@ -212,6 +304,14 @@ function PresentationPreviw(props: Presentation) {
             elementsList={slide.elementsList}
         ></WorkSlide> : null
     )
+    const SlidesList = Slides.map((slide) =>
+        <PresentationSlide
+            id={slide.id}
+            backgroundColor={slide.backgroundColor}
+            workSlide={slide.workSlide}
+            elementsList={slide.elementsList}
+        ></PresentationSlide>
+    )
     return (
         <div>
             <div className="Preview">
@@ -219,9 +319,9 @@ function PresentationPreviw(props: Presentation) {
                 <p className='PreviewHeader'>{props.name}</p>
             </div>
             <div className='WorkArea'>
-                {/* <div className='SlidesList'>
+                <div className='SlidesList'>
                     {SlidesList}
-                </div> */}
+                </div>
                 {workSlide}
             </div>
         </div>
@@ -229,5 +329,13 @@ function PresentationPreviw(props: Presentation) {
 }
 
 export {
-    PresentationPreviw,
+    PresentationPreview,
+    WorkSlide,
 }
+
+export type {Slide}
+export type {TextElement}
+export type {PictureElement}
+export type {Circle}
+export type {Triangle}
+export type {Rectangle}

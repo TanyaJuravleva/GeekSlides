@@ -98,41 +98,39 @@ function PresentationSlide(props: Slide) {
 }
 
 function TextElement(props:TextElement) {
-    let Bold
-    let Underlined
-    let Italic
+    let Bold = "unset"
+    let Underlined = "none"
+    let Italic = "unset"
     if (props.bold)
     {
-        Bold = {
-            fontWeight: "bold"
-        }
+        Bold = "bold"
     }
     if (props.underlined)
     {
-        Underlined = {
-            textDecoration: "underline"
-        }
+        Underlined = "underline"
     }
     if (props.italic)
     {
-        Italic = {
-            fontStyle: "italic"
-        }
+        Italic =  "italic"
     }
     const WorkTextStyle = {
-        fontSize: props.fontSize,
-        color: props.color,
-        fontFamily: props.fontFamily,
         background: props.fillField,
-        textalign: props.alignment,
-        x: props.startingPoint.x,
-        y:props.startingPoint.y,
+        marginLeft: props.startingPoint.x,
+        marginTop:props.startingPoint.y,
         width: props.size.width,
         height: props.size.height
     }
-    const WorkText = Bold && Underlined && Italic && {
-        background:props.fillText
-    }
+    const WorkText = {
+        background:props.fillText,
+        color: props.color,
+        fontSize: props.fontSize,
+        fontFamily: props.fontFamily,
+        textalign: props.alignment,
+        fontWeight: Bold,
+        fontStyle: Italic,
+        textDecoration: Underlined,
+        textAlign: props.alignment,
+    } 
     return (
         <div id={props.id} style={WorkTextStyle}>
             <p style={WorkText}>{props.text}</p>
@@ -162,11 +160,16 @@ function Circle(props:Circle) {
 }
 
 function Triangle(props:Triangle) {
+    const x1:string = String(props.pointOne.x)
+    const y1:string = String(props.pointOne.y)
+    const x2:string = String(props.pointTwo.x)
+    const y2:string = String(props.pointTwo.y)
+    const x3:string = String(props.pointThree.x)
+    const y3:string = String(props.pointThree.y)
+    const Points:string = x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x3 + ',' + y3;
     return (
         <svg>
-            <polygon
-                points="{props.pointOne}, {props.pointTwo}, {props.pointThree}"
-            />
+            <polygon points={Points}/>
         </svg>
     )
 }

@@ -13,17 +13,17 @@ const textField:TextElement = {
   id: 'text1',
   type: 'text',
   startingPoint: {x: 2, y: 50},
-  size: {width: 200, height: 300},
+  size: {width: 500, height: 300},
   text: 'Заголовок',
   fontSize: 36,
-  color: 'green',
-  fontFamily: 'Roboto',
-  fillText: 'red', // заливка фона текста
-  fillField: 'yellow', // заливка текстового поля
+  color: 'black',
+  fontFamily: 'Arial',
+  fillText: 'pink', // заливка фона текста
+  fillField: 'orange', // заливка текстового поля
   alignment: 'center', // выравнивание (по левому краю, по правому краю, по центру) 
   bold: true, 
-  italic: true,
-  underlined: true,
+  italic: false,
+  underlined: false,
 }
 
 const pictureField:PictureElement = {
@@ -52,14 +52,14 @@ const triangle:Triangle = {
   borderWidth: 30,
   borderColor: 'red',
   type: 'triangle',
-  pointOne: {x: 40, y: 59},
-  pointTwo: {x: 40, y: 59},
-  pointThree: {x: 40, y: 59},
+  pointOne: {x: 5, y: 135},
+  pointTwo: {x: 115, y: 5},
+  pointThree: {x: 225, y: 135},
 }
 
 const rectangle:Rectangle = {
   id: 'rectangle1',
-  size: {width: 30, height: 40},
+  size: {width: 200, height: 400},
   startingPoint: {x: 40, y: 59},
   fillColor: 'blue',
   borderWidth: 40,

@@ -13,14 +13,14 @@ const textField:TextElement = {
   id: 'text1',
   type: 'text',
   startingPoint: {x: 2, y: 50},
-  size: {width: 500, height: 300},
+  size: {width: 50, height: 30},
   text: 'Заголовок',
   fontSize: 36,
   color: 'black',
   fontFamily: 'Arial',
   fillText: 'pink', // заливка фона текста
   fillField: 'orange', // заливка текстового поля
-  alignment: 'center', // выравнивание (по левому краю, по правому краю, по центру) 
+  alignment: "center", // выравнивание (по левому краю, по правому краю, по центру) 
   bold: true, 
   italic: false,
   underlined: false,
@@ -78,7 +78,7 @@ const slidesList = [
 ];
 
 const CollectionSlides = [
-  {selectedSlideId: '1', selectedElementsIds: ['1', '2', '3']}
+  {selectedSlideId: '2', selectedElementsIds: ['1', '2', '3']}
 ]
 
 function App() {

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import React, { useState } from 'react'
 import './Types.css';
 
 type Presentation = {
@@ -90,9 +90,10 @@ function PresentationSlide(props: Slide) {
     const SlideStyle = {
         background: props.backgroundColor
     }
+    const workSlide = Elements(props.elementsList)
     return (
         <div className='Slide' style={SlideStyle} key={props.id}>
-            <p>{props.workSlide}</p>
+            {workSlide}
         </div>
     )
 }
@@ -113,24 +114,23 @@ function TextElement(props:TextElement) {
     {
         Italic =  "italic"
     }
+    const [textAlign, setAlign] = useState('left');
     const WorkTextStyle = {
         background: props.fillField,
         marginLeft: props.startingPoint.x,
         marginTop:props.startingPoint.y,
-        width: props.size.width,
-        height: props.size.height
+        width: props.size.width + '%',
+        height: props.size.height + '%',
     }
     const WorkText = {
         background:props.fillText,
         color: props.color,
         fontSize: props.fontSize,
         fontFamily: props.fontFamily,
-        textalign: props.alignment,
         fontWeight: Bold,
         fontStyle: Italic,
         textDecoration: Underlined,
-        textAlign: props.alignment,
-    } 
+    }
     return (
         <div id={props.id} style={WorkTextStyle}>
             <p style={WorkText}>{props.text}</p>
@@ -187,22 +187,20 @@ function Rectangle(props:Rectangle) {
     )
 }
 
-function WorkSlide(props: Slide) {
-    const WorkSlideStyle = {
-        background: props.backgroundColor
-    }
+function Elements(elementsList: Array<TextElement|PictureElement|Circle|Rectangle|Triangle>)
+{
     let ElementsArray:Array<any> = []
     let textField:TextElement
     let pictureField:PictureElement
     let circleField:Circle
     let triangleField:Triangle
     let rectangleField:Rectangle
-    if (props.elementsList)
+    if (elementsList)
     {
-        for (let i = 0; i < props.elementsList.length; i++)
+        for (let i = 0; i < elementsList.length; i++)
         {
-            let element = props.elementsList[i];
-            if (element.type == "text")
+            let element = elementsList[i];
+            if (element.type === "text")
             {
                 textField = element;
                 ElementsArray.push(
@@ -223,7 +221,7 @@ function WorkSlide(props: Slide) {
                     underlined={textField.underlined}
                 ></TextElement>)
             }
-            if (element.type == "picture")
+            if (element.type === "picture")
             {
                 pictureField = element;
                 ElementsArray.push(
@@ -236,7 +234,7 @@ function WorkSlide(props: Slide) {
                     ></PictureElement>
                 )
             }
-            if (element.type == "circle")
+            if (element.type === "circle")
             {
                 circleField = element;
                 ElementsArray.push(
@@ -252,7 +250,7 @@ function WorkSlide(props: Slide) {
                     ></Circle>
                 )
             }
-            if (element.type == "triangle")
+            if (element.type === "triangle")
             {
                 triangleField = element;
                 ElementsArray.push(
@@ -269,7 +267,7 @@ function WorkSlide(props: Slide) {
                     ></Triangle>
                 )
             }
-            if (element.type == "rectangle")
+            if (element.type === "rectangle")
             {
                 rectangleField = element;
                 ElementsArray.push(
@@ -289,9 +287,16 @@ function WorkSlide(props: Slide) {
     const workSlide = ElementsArray.map((element) => 
         element
     )
+    return workSlide
+}
+
+function WorkSlide(props: Slide) {
+    const WorkSlideStyle = {
+        background: props.backgroundColor
+    }
+    const workSlide = Elements(props.elementsList)
     return (
         <div className='WorkSlide' style={WorkSlideStyle} key={props.id}>
-            <p>{props.workSlide}</p>
             {workSlide}
         </div>
     )

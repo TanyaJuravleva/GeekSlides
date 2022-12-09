@@ -30,19 +30,18 @@ const pictureField:PictureElement = {
   id: 'picture1',
   type: 'picture',
   src: cat,
-  startingPoint: {x: 30, y: 50},
-  size: {width: 400, height: 400},
+  startingPoint: {x: 100, y: 50},
+  size: {width: 40, height: 40},
 }
 
 const circle:Circle = {
   id: 'circle1',
-  startingPoint: {x: 70, y: 60},
+  startingPoint: {x: 500, y: 60},
   fillColor: 'red',
   borderWidth: 20,
   borderColor: 'grey',
   type: 'circle',
-  radiusX: 30,
-  radiusY: 40,
+  size: {width:30, height:40}
 }
 
 const triangle:Triangle = {
@@ -60,8 +59,8 @@ const triangle:Triangle = {
 const rectangle:Rectangle = {
   id: 'rectangle1',
   size: {width: 200, height: 400},
-  startingPoint: {x: 40, y: 59},
-  fillColor: 'blue',
+  startingPoint: {x: 150, y: 59},
+  fillColor: 'pink',
   borderWidth: 40,
   borderColor: 'green',
   type: 'rectangle',

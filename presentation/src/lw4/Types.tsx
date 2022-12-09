@@ -70,8 +70,7 @@ type BaseFigureElement = {
 
 type Circle = BaseFigureElement & {
     type: 'circle',
-    radiusX: number,
-    radiusY: number,
+    size: Size,
 };
 
 type Triangle = BaseFigureElement & {
@@ -114,11 +113,10 @@ function TextElement(props:TextElement) {
     {
         Italic =  "italic"
     }
-    const [textAlign, setAlign] = useState('left');
     const WorkTextStyle = {
         background: props.fillField,
-        marginLeft: props.startingPoint.x,
-        marginTop:props.startingPoint.y,
+        left: props.startingPoint.x,
+        top: props.startingPoint.y,
         width: props.size.width + '%',
         height: props.size.height + '%',
     }
@@ -132,30 +130,49 @@ function TextElement(props:TextElement) {
         textDecoration: Underlined,
     }
     return (
-        <div id={props.id} style={WorkTextStyle}>
+        <div id={props.id} style={WorkTextStyle} className="Element">
             <p style={WorkText}>{props.text}</p>
         </div>
     )
 }
 
 function PictureElement(props:PictureElement) {
+    const PictureStyle = {
+        width: props.size.width + '%',
+        height: props.size.height + '%'
+    }
+    const Picture = {
+        left: props.startingPoint.x,
+        top: props.startingPoint.y
+    }
     return (
-        <div id={props.id}>
-           <img src={props.src} width={props.size.width} height={props.size.height}></img>
+        <div id={props.id} className="Element" style={Picture}>
+           <img src={props.src} style={PictureStyle}></img>
         </div>
     )
 }
 
 function Circle(props:Circle) {
+    const CircleStyle = {
+        left: props.startingPoint.x,
+        top: props.startingPoint.y,
+        width: props.size.width,
+        height: props.size.height
+    }
+    const CircleSvg = {
+        width: props.size.width,
+        height: props.size.height
+    }
     return (
-        <svg>
-            <ellipse rx={props.radiusX} ry={props.radiusY} cx={props.startingPoint.x} cy={props.startingPoint.y}
-                    transform={"rotate(-65, 98, 94)"}
-                    stroke-opacity={0.5}
-                    stroke={props.borderColor}
-                    fill={props.fillColor}
-            ></ellipse>
-        </svg>
+        <div className="Element" style={CircleStyle}>
+            <svg>
+                <ellipse rx={props.size.width/2} ry={props.size.height/2} cx={props.startingPoint.x/2} cy={props.startingPoint.y/2}
+                        stroke={props.borderColor}
+                        fill={props.fillColor}
+                        strokeWidth={props.borderWidth}
+                ></ellipse>
+            </svg>
+        </div>
     )
 }
 
@@ -166,22 +183,27 @@ function Triangle(props:Triangle) {
     const y2:string = String(props.pointTwo.y)
     const x3:string = String(props.pointThree.x)
     const y3:string = String(props.pointThree.y)
-    const Points:string = x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x3 + ',' + y3;
+    const Points:string = `${x1},${y1} ${x2},${y2} ${x3},${y3}`;
     return (
-        <svg>
-            <polygon points={Points}/>
-        </svg>
+        <div>
+            <svg className="Element">
+                <polygon points={Points}/>
+            </svg>
+        </div>
     )
 }
 
 function Rectangle(props:Rectangle) {
     return (
-        <svg>
+        <svg className="Element">
             <rect
                 width={props.size.width}
                 height={props.size.height}
                 x={props.startingPoint.x}
                 y={props.startingPoint.y}
+                stroke={props.borderColor}
+                fill={props.fillColor}
+                strokeWidth={props.borderWidth}
             ></rect>
         </svg>
     )
@@ -189,12 +211,7 @@ function Rectangle(props:Rectangle) {
 
 function Elements(elementsList: Array<TextElement|PictureElement|Circle|Rectangle|Triangle>)
 {
-    let ElementsArray:Array<any> = []
-    let textField:TextElement
-    let pictureField:PictureElement
-    let circleField:Circle
-    let triangleField:Triangle
-    let rectangleField:Rectangle
+    let ElementsArray:Array<JSX.Element> = []
     if (elementsList)
     {
         for (let i = 0; i < elementsList.length; i++)
@@ -202,102 +219,92 @@ function Elements(elementsList: Array<TextElement|PictureElement|Circle|Rectangl
             let element = elementsList[i];
             if (element.type === "text")
             {
-                textField = element;
                 ElementsArray.push(
                 <TextElement
-                    text={textField.text}
-                    fontSize={textField.fontSize}
-                    id={textField.id}
-                    size={textField.size}
-                    startingPoint={textField.startingPoint}
-                    type={textField.type}
-                    color={textField.color}
-                    fontFamily={textField.fontFamily}
-                    fillText={textField.fillText}
-                    fillField={textField.fillField}
-                    alignment={textField.alignment}
-                    bold={textField.bold}
-                    italic={textField.italic}
-                    underlined={textField.underlined}
+                    text={element.text}
+                    fontSize={element.fontSize}
+                    id={element.id}
+                    size={element.size}
+                    startingPoint={element.startingPoint}
+                    type={element.type}
+                    color={element.color}
+                    fontFamily={element.fontFamily}
+                    fillText={element.fillText}
+                    fillField={element.fillField}
+                    alignment={element.alignment}
+                    bold={element.bold}
+                    italic={element.italic}
+                    underlined={element.underlined}
                 ></TextElement>)
             }
             if (element.type === "picture")
             {
-                pictureField = element;
                 ElementsArray.push(
                     <PictureElement
-                        id={pictureField.id}
-                        type={pictureField.type}
-                        src={pictureField.src}
-                        startingPoint={pictureField.startingPoint}
-                        size={pictureField.size}
+                        id={element.id}
+                        type={element.type}
+                        src={element.src}
+                        startingPoint={element.startingPoint}
+                        size={element.size}
                     ></PictureElement>
                 )
             }
             if (element.type === "circle")
             {
-                circleField = element;
                 ElementsArray.push(
                     <Circle
-                    id={circleField.id}
-                    type={circleField.type}
-                    radiusX={circleField.radiusX}
-                    radiusY={circleField.radiusY}
-                    startingPoint={circleField.startingPoint}
-                    fillColor={circleField.fillColor}
-                    borderColor={circleField.borderColor}
-                    borderWidth={circleField.borderWidth}
+                    id={element.id}
+                    type={element.type}
+                    size={element.size}
+                    startingPoint={element.startingPoint}
+                    fillColor={element.fillColor}
+                    borderColor={element.borderColor}
+                    borderWidth={element.borderWidth}
                     ></Circle>
                 )
             }
             if (element.type === "triangle")
             {
-                triangleField = element;
                 ElementsArray.push(
                     <Triangle
-                        id={triangleField.id}
-                        pointOne={triangleField.pointOne}
-                        pointTwo={triangleField.pointTwo}
-                        pointThree={triangleField.pointThree}
-                        startingPoint={triangleField.startingPoint}
-                        type={triangleField.type}
-                        fillColor={triangleField.fillColor}
-                        borderColor={triangleField.borderColor}
-                        borderWidth={triangleField.borderWidth}
+                        id={element.id}
+                        pointOne={element.pointOne}
+                        pointTwo={element.pointTwo}
+                        pointThree={element.pointThree}
+                        startingPoint={element.startingPoint}
+                        type={element.type}
+                        fillColor={element.fillColor}
+                        borderColor={element.borderColor}
+                        borderWidth={element.borderWidth}
                     ></Triangle>
                 )
             }
             if (element.type === "rectangle")
             {
-                rectangleField = element;
                 ElementsArray.push(
                     <Rectangle
-                        id={rectangleField.id}
-                        startingPoint={rectangleField.startingPoint}
-                        type={rectangleField.type}
-                        size={rectangleField.size}
-                        fillColor={rectangleField.fillColor}
-                        borderColor={rectangleField.borderColor}
-                        borderWidth={rectangleField.borderWidth}
+                        id={element.id}
+                        startingPoint={element.startingPoint}
+                        type={element.type}
+                        size={element.size}
+                        fillColor={element.fillColor}
+                        borderColor={element.borderColor}
+                        borderWidth={element.borderWidth}
                     ></Rectangle>
                 )
             }
         }
     }
-    const workSlide = ElementsArray.map((element) => 
-        element
-    )
-    return workSlide
+    return ElementsArray
 }
 
 function WorkSlide(props: Slide) {
     const WorkSlideStyle = {
         background: props.backgroundColor
     }
-    const workSlide = Elements(props.elementsList)
     return (
         <div className='WorkSlide' style={WorkSlideStyle} key={props.id}>
-            {workSlide}
+            {Elements(props.elementsList)}
         </div>
     )
 }

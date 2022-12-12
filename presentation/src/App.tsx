@@ -36,32 +36,33 @@ const pictureField:PictureElement = {
 
 const circle:Circle = {
   id: 'circle1',
-  startingPoint: {x: 500, y: 60},
+  startingPoint: {x: 0, y: 0},
   fillColor: 'red',
   borderWidth: 20,
   borderColor: 'grey',
   type: 'circle',
-  size: {width:30, height:40}
+  size: {width: 60, height:60}
 }
 
 const triangle:Triangle = {
   id: 'triangle1',
-  startingPoint: {x: 40, y: 59},
+  startingPoint: {x: 40, y: 150},
   fillColor: 'purple',
   borderWidth: 30,
   borderColor: 'red',
   type: 'triangle',
-  pointOne: {x: 5, y: 135},
-  pointTwo: {x: 115, y: 5},
-  pointThree: {x: 225, y: 135},
+  size: {width: 225, height: 135}
+  // pointOne: {x: 5, y: 135},
+  // pointTwo: {x: 115, y: 5},
+  // pointThree: {x: 225, y: 135},
 }
 
 const rectangle:Rectangle = {
   id: 'rectangle1',
   size: {width: 200, height: 400},
-  startingPoint: {x: 150, y: 59},
+  startingPoint: {x: 0, y: 0},
   fillColor: 'pink',
-  borderWidth: 40,
+  borderWidth:20,
   borderColor: 'green',
   type: 'rectangle',
 }

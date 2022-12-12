@@ -1,40 +1,52 @@
-.Preview {
+.header {
   padding: 20px;
   display: flex;
   align-items: center;
 }
 
-.PreviewHeader {
+.name {
   font:40px/1.2 Roboto;
   font-weight: 500;
 }
 
-.PreviewLogo {
+.logo {
   width: 64px;
   height: 64px;
   margin-right: 20px;
 }
 
-.SlidesList {
+.border {
+  border: 2px solid #d9d9d9;
+}
+
+.work {
+  border: 2px solid #d9d9d9;
+  width: 100%;
+}
+
+.list {
   display: flex;
   flex-direction: column;
+  width: 360px;
   padding: 20px;
 }
 
-.Slide {
-  height: 300px;
-  width: 400px;
+.slide {
+  width:360px;
+  height: 200px;
   position: relative;
   margin-bottom: 20px;
 }
 
-.WorkArea {
+.area {
   display: flex;
+  width: 100%;
 }
 
-.WorkSlide {
-  width: 800px;
+.workslide {
+  width: 1080px;
   height: 600px;
+  padding: 20px;
   position: relative;
 }
 

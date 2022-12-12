@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './Types.css';
+import styles from './Types.module.css'
 
 type Presentation = {
     name: string,
@@ -66,32 +66,31 @@ type BaseFigureElement = {
     fillColor: string,
     borderWidth: number,
     borderColor: string,
+    size: Size,
 }
 
 type Circle = BaseFigureElement & {
     type: 'circle',
-    size: Size,
 };
 
 type Triangle = BaseFigureElement & {
     type: 'triangle',
-    pointOne: Coordinates,
-    pointTwo: Coordinates,
-    pointThree: Coordinates,
+    // pointOne: Coordinates,
+    // pointTwo: Coordinates,
+    // pointThree: Coordinates,
 }
 
 type Rectangle = BaseFigureElement & {
     type: 'rectangle',
-    size: Size,
 };
 
-function PresentationSlide(props: Slide) {
+function PresentationSlideList(props: Slide) {
     const SlideStyle = {
-        background: props.backgroundColor
+        background: props.backgroundColor,
     }
     const workSlide = Elements(props.elementsList)
     return (
-        <div className='Slide' style={SlideStyle} key={props.id}>
+        <div className={styles.slide} style={SlideStyle} key={props.id}>
             {workSlide}
         </div>
     )
@@ -156,51 +155,64 @@ function Circle(props:Circle) {
     const CircleStyle = {
         left: props.startingPoint.x,
         top: props.startingPoint.y,
-        width: props.size.width,
-        height: props.size.height
-    }
-    const CircleSvg = {
-        width: props.size.width,
-        height: props.size.height
+        width: props.size.width + 2*props.borderWidth,
+        height: props.size.height + 2*props.borderWidth
     }
     return (
-        <div className="Element" style={CircleStyle}>
-            <svg>
-                <ellipse rx={props.size.width/2} ry={props.size.height/2} cx={props.startingPoint.x/2} cy={props.startingPoint.y/2}
-                        stroke={props.borderColor}
-                        fill={props.fillColor}
-                        strokeWidth={props.borderWidth}
-                ></ellipse>
-            </svg>
-        </div>
+        <svg className="Element" style={CircleStyle}>
+            <ellipse rx={props.size.width/2 + props.borderWidth/2} ry={props.size.height/2 + props.borderWidth/2} cx={props.size.width/2 + props.borderWidth} cy={props.size.height/2 + props.borderWidth}
+                    stroke={props.borderColor}
+                    fill={props.fillColor}
+                    strokeWidth={props.borderWidth}
+            ></ellipse>
+        </svg>
     )
 }
 
 function Triangle(props:Triangle) {
-    const x1:string = String(props.pointOne.x)
-    const y1:string = String(props.pointOne.y)
-    const x2:string = String(props.pointTwo.x)
-    const y2:string = String(props.pointTwo.y)
-    const x3:string = String(props.pointThree.x)
-    const y3:string = String(props.pointThree.y)
+    const TriangleStyle = {
+        left: props.startingPoint.x,
+        top: props.startingPoint.y,
+        width: props.size.width + 2*props.borderWidth,
+        height: props.size.height + 2*props.borderWidth
+    }
+    // const x1:string = String(props.pointOne.x)
+    // const y1:string = String(props.pointOne.y)
+    // const x2:string = String(props.pointTwo.x)
+    // const y2:string = String(props.pointTwo.y)
+    // const x3:string = String(props.pointThree.x)
+    // const y3:string = String(props.pointThree.y)
+    const x1:string = String(props.size.width/2 + props.borderWidth)
+    const y1:string = String(props.borderWidth)
+    const x2:string = String(props.borderWidth)
+    const y2:string = String(props.size.height + props.borderWidth)
+    const x3:string = String(props.size.width + props.borderWidth)
+    const y3:string = String(props.size.height + props.borderWidth)
     const Points:string = `${x1},${y1} ${x2},${y2} ${x3},${y3}`;
     return (
-        <div>
-            <svg className="Element">
-                <polygon points={Points}/>
-            </svg>
-        </div>
+        <svg className="Element" style={TriangleStyle}>
+            <polygon points={Points}                     
+                    stroke={props.borderColor}
+                    fill={props.fillColor}
+                    strokeWidth={props.borderWidth}/>
+        </svg>
     )
 }
 
 function Rectangle(props:Rectangle) {
+    const RectangleStyle = {
+        left: props.startingPoint.x,
+        top: props.startingPoint.y,
+        width: props.size.width + 2*props.borderWidth,
+        height: props.size.height + 2*props.borderWidth,
+    }
     return (
-        <svg className="Element">
+        <svg className="Element" style={RectangleStyle}>
             <rect
                 width={props.size.width}
                 height={props.size.height}
-                x={props.startingPoint.x}
-                y={props.startingPoint.y}
+                x={props.borderWidth/2}
+                y={props.borderWidth/2}
                 stroke={props.borderColor}
                 fill={props.fillColor}
                 strokeWidth={props.borderWidth}
@@ -268,9 +280,10 @@ function Elements(elementsList: Array<TextElement|PictureElement|Circle|Rectangl
                 ElementsArray.push(
                     <Triangle
                         id={element.id}
-                        pointOne={element.pointOne}
-                        pointTwo={element.pointTwo}
-                        pointThree={element.pointThree}
+                        // pointOne={element.pointOne}
+                        // pointTwo={element.pointTwo}
+                        // pointThree={element.pointThree}
+                        size={element.size}
                         startingPoint={element.startingPoint}
                         type={element.type}
                         fillColor={element.fillColor}
@@ -303,7 +316,7 @@ function WorkSlide(props: Slide) {
         background: props.backgroundColor
     }
     return (
-        <div className='WorkSlide' style={WorkSlideStyle} key={props.id}>
+        <div className={styles.workslide} style={WorkSlideStyle} key={props.id}>
             {Elements(props.elementsList)}
         </div>
     )
@@ -320,24 +333,28 @@ function PresentationPreview(props: Presentation) {
         ></WorkSlide> : null
     )
     const SlidesList = Slides.map((slide) =>
-        <PresentationSlide
+        <PresentationSlideList
             id={slide.id}
             backgroundColor={slide.backgroundColor}
             workSlide={slide.workSlide}
             elementsList={slide.elementsList}
-        ></PresentationSlide>
+        ></PresentationSlideList>
     )
     return (
         <div>
-            <div className="Preview">
-                <img className='PreviewLogo' src={props.logo}></img>
-                <p className='PreviewHeader'>{props.name}</p>
+            <div className={styles.header}>
+                <img className={styles.logo} src={props.logo}></img>
+                <p className={styles.name}>{props.name}</p>
             </div>
-            <div className='WorkArea'>
-                <div className='SlidesList'>
-                    {SlidesList}
+            <div className={styles.area}>
+                <div className={styles.border}>
+                    <div className={styles.list}>
+                        {SlidesList}
+                    </div>
                 </div>
-                {workSlide}
+                <div className={styles.work}>
+                    {workSlide}
+                </div>
             </div>
         </div>
     )

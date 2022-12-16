@@ -1,18 +1,15 @@
 import React from 'react';
-import {PresentationPreview, Slide} from "./lw4/Types"
-import {PictureElement} from "./lw4/Types"
-import {TextElement} from "./lw4/Types"
-import {Circle} from "./lw4/Types"
-import {Rectangle} from "./lw4/Types"
-import {Triangle} from "./lw4/Types"
-import logo from './logo.svg';
-import cat from './cat.jpg'
-import { serialize } from 'v8';
+import {PresentationPreview} from './components/PresentationPreview'
+import {TextElement, PictureElement} from './types/SlideElements'
+import {Circle, Rectangle, Triangle} from './types/Figures'
+import {Slide} from './types/Slide'
+import logo from './images/logo.svg';
+import cat from './images/slides/cat.jpg'
 
 const textField:TextElement = {
   id: 'text1',
   type: 'text',
-  startingPoint: {x: 300, y: 50},
+  startingPoint: {x: 400, y: 50},
   size: {width: 290, height: 150},
   text: '1Заголовок',
   fontSize: 36,

@@ -7,7 +7,6 @@ type Slide = {
     id: string,
     backgroundColor: string,
     workSlide: boolean,
-    size: Size,
     elementsList: Array<TextElement|PictureElement|Circle|Rectangle|Triangle>
 };
 

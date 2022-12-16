@@ -15,7 +15,6 @@ function PresentationPreview(props: Presentation) {
         backgroundColor={workSlideData.backgroundColor}
         workSlide={workSlideData.workSlide}
         elementsList={workSlideData.elementsList}
-        size={workSlideData.size}
     />
     const SlidesList = Slides.map((slide) =>
         <PresentationSlideList
@@ -23,7 +22,6 @@ function PresentationPreview(props: Presentation) {
             backgroundColor={slide.backgroundColor}
             workSlide={slide.workSlide}
             elementsList={slide.elementsList}
-            size={slide.size}
         ></PresentationSlideList>
     )
     return (

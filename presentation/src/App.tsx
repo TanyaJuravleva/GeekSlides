@@ -66,9 +66,9 @@ const rectangle:Rectangle = {
 
 const elements = [textField, pictureField, circle, rectangle, triangle, ]
 
-const slide1:Slide = {id: '2', backgroundColor:'blue', workSlide: true, elementsList: elements, size: {width: 1080, height: 600}}
-const slide2:Slide = {id: '1', backgroundColor:'red', workSlide: false, elementsList: [], size: {width: 1080, height: 600}}
-const slide3:Slide = {id: '3', backgroundColor:'green', workSlide: false, elementsList: [], size: {width: 1080, height: 600}}
+const slide1:Slide = {id: '2', backgroundColor:'blue', workSlide: true, elementsList: elements}
+const slide2:Slide = {id: '1', backgroundColor:'red', workSlide: false, elementsList: []}
+const slide3:Slide = {id: '3', backgroundColor:'green', workSlide: false, elementsList: []}
 
 const slidesList = [
   slide1, slide2, slide3, slide3, slide3

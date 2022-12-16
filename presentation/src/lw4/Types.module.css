@@ -7,6 +7,7 @@
 .name {
   font:40px/1.2 Roboto;
   font-weight: 500;
+  margin: 0;
 }
 
 .logo {
@@ -22,13 +23,20 @@
 .work {
   border: 2px solid #d9d9d9;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
 }
 
 .list {
-  display: flex;
-  flex-direction: column;
-  width: 360px;
+  display: block;
+  width: 376px;
+  height: 94%;
   padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 .slide {
@@ -36,20 +44,43 @@
   height: 200px;
   position: relative;
   margin-bottom: 20px;
+  border-radius: 11px;
+  box-shadow: 0px 0px 10px 4px rgb(0 0 0 / 50%);
+  transform: scale(0.3333333);
 }
 
 .area {
   display: flex;
   width: 100%;
+  height: 753px;
 }
 
 .workslide {
-  width: 1080px;
-  height: 600px;
   padding: 20px;
   position: relative;
+  box-shadow: 0px 0px 10px 3px rgb(0 0 0 / 50%);
 }
 
-.Element {
+.element {
   position: absolute;
+}
+
+.zoom {
+  position: absolute;
+  /* zoom: 0.33333333333333333 */
+}
+
+.toolelement {
+  width: 30px;
+  height: 30px;
+  margin-right: 9px;
+}
+
+.toolbar {
+  border: 1px solid #d9d9d9;
+  padding: 9px 35px;
+}
+
+.menu {
+  display: flex;
 }

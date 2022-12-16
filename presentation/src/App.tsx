@@ -51,7 +51,7 @@ const triangle:Triangle = {
   borderWidth: 30,
   borderColor: 'red',
   type: 'triangle',
-  size: {width: 400, height: 135}
+  size: {width: 600, height: 400}
   // pointOne: {x: 5, y: 135},
   // pointTwo: {x: 115, y: 5},
   // pointThree: {x: 225, y: 135},
@@ -67,7 +67,7 @@ const rectangle:Rectangle = {
   type: 'rectangle',
 }
 
-const elements = [textField, pictureField, circle, triangle, rectangle]
+const elements = [textField, pictureField, circle, rectangle, triangle, ]
 
 const slide1:Slide = {id: '2', backgroundColor:'blue', workSlide: true, elementsList: elements, size: {width: 1080, height: 600}}
 const slide2:Slide = {id: '1', backgroundColor:'red', workSlide: false, elementsList: [], size: {width: 1080, height: 600}}

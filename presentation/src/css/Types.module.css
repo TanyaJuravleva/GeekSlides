@@ -80,4 +80,6 @@
 
 .menu {
   display: flex;
+  width: 398px;
+  justify-content: space-between;
 }

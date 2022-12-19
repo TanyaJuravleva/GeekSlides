@@ -6,6 +6,9 @@ import {PresentationSlideList} from './PresentationSlideList'
 import image from './../images/toolbar/image.svg'
 import text from './../images/toolbar/text.svg'
 import figure from './../images/toolbar/figure.png'
+import {Navbar} from './NavBar';
+import { addSlide } from '../actionsCreators/AddSlide'
+import { TitleSlide } from '../states/TitleSlide'
 
 function PresentationPreview(props: Presentation) {
     const Slides:Array<Slide> = props.slides;
@@ -30,14 +33,8 @@ function PresentationPreview(props: Presentation) {
                 <img className={styles.logo} src={props.logo}></img>
                 <div>
                     <p className={styles.name}>{props.name}</p>
-                    <div className={styles.menu}>
-                        <p>Файл</p>
-                        <p>Вид</p>
-                        <p>Правка</p>
-                        <p>Слайд</p>
-                        <p>Объект</p>
-                        <p>Вставка</p>
-                    </div>
+                    <Navbar />
+                    <button onClick={() => AddSlide(, TitleSlide)}</button>
                 </div>
             </div>
             <div className={styles.toolbar}>

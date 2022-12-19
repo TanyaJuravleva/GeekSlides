@@ -1,5 +1,6 @@
 const presentation = {
     name: 'My Presentation',
+    logo: './logo.svg',
     slides: [slide],
     selectedCollection: Array({
         selectedSlideId: '1',

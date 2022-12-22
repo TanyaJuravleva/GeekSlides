@@ -42,7 +42,6 @@ function PresentationPreview(props: Presentation) {
                 </div>
             </div>
             <Toolbar />
-            <button ></button>
             <div className={styles.area}>
                 <div className={styles.border}>
                     <div className={styles.list}>

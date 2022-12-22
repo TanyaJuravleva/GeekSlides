@@ -70,7 +70,12 @@
 .toolelement {
   width: 30px;
   height: 30px;
-  margin-right: 9px;
+ /* margin-right: 9px;*/
+}
+
+.toolbutton {
+  /*background-color: #fff;*/
+  margin-right: 10px;
 }
 
 .toolbar {

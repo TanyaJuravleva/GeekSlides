@@ -6,7 +6,11 @@ import {PresentationSlideList} from './PresentationSlideList'
 import image from './../images/toolbar/image.svg'
 import text from './../images/toolbar/text.svg'
 import figure from './../images/toolbar/figure.png'
-import {Navbar} from './NavBar';
+import undo from './../images/toolbar/undo.png'
+import redo from './../images/toolbar/redo.png'
+import plus from './../images/toolbar/plus.png'
+import {Navbar} from './NavBar'
+import { Toolbar } from './Toolbar'
 import { addSlide } from '../actionsCreators/AddSlide'
 import { TitleSlide } from '../states/TitleSlide'
 
@@ -34,14 +38,11 @@ function PresentationPreview(props: Presentation) {
                 <div>
                     <p className={styles.name}>{props.name}</p>
                     <Navbar />
-                    <button onClick={() => AddSlide(, TitleSlide)}</button>
+                    
                 </div>
             </div>
-            <div className={styles.toolbar}>
-                <img className={styles.toolelement} src={image}></img>
-                <img className={styles.toolelement} src={text}></img>
-                <img className={styles.toolelement} src={figure}></img>
-            </div>
+            <Toolbar />
+            <button ></button>
             <div className={styles.area}>
                 <div className={styles.border}>
                     <div className={styles.list}>
@@ -54,6 +55,13 @@ function PresentationPreview(props: Presentation) {
             </div>
         </div>
     )
+    
 }
 
 export {PresentationPreview}
+
+/*                    <Navbar />
+                    <button onClick={() => AddSlide(, TitleSlide)}></button> */
+
+
+                    /*onClick={() => addSlide(StartPresentation, TitleSlide)} */

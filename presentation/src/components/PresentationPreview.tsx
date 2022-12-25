@@ -3,19 +3,20 @@ import {Slide} from './../types/Slide'
 import styles from './../css/Types.module.css'
 import {WorkSlide} from './WorkSlide'
 import {PresentationSlideList} from './PresentationSlideList'
-import image from './../images/toolbar/image.svg'
-import text from './../images/toolbar/text.svg'
-import figure from './../images/toolbar/figure.png'
-import undo from './../images/toolbar/undo.png'
-import redo from './../images/toolbar/redo.png'
-import plus from './../images/toolbar/plus.png'
 import {Navbar} from './NavBar'
 import { Toolbar } from './Toolbar'
-import { addSlide } from '../actionsCreators/AddSlide'
-import { TitleSlide } from '../states/TitleSlide'
+import { useState } from 'react'
+
+import { titleSlide } from '../states/TitleSlide'
+import { titleText } from '../states/TitleText'
+
+import { AddSlide } from '../actions/AddSlide'
+import { AddTextElement } from '../actions/SlideElements/AddTextElement'
+import { ChangeWorkSlide } from '../actions/ChangeWorkSlide'
 
 function PresentationPreview(props: Presentation) {
-    const Slides:Array<Slide> = props.slides;
+    let [presentation, ChangePresentation] = useState(props);
+    const Slides:Array<Slide> = presentation.slides;
     const workSlideData = Slides.find(slide => slide.workSlide) as Slide
     const workSlide = <WorkSlide
         id={workSlideData.id}
@@ -24,23 +25,28 @@ function PresentationPreview(props: Presentation) {
         elementsList={workSlideData.elementsList}
     />
     const SlidesList = Slides.map((slide) =>
-        <PresentationSlideList
-            id={slide.id}
-            backgroundColor={slide.backgroundColor}
-            workSlide={slide.workSlide}
-            elementsList={slide.elementsList}
-        ></PresentationSlideList>
+        <div onClick={() => ChangePresentation(presentation = ChangeWorkSlide(presentation, slide.id))}>
+            <PresentationSlideList
+                id={slide.id}
+                backgroundColor={slide.backgroundColor}
+                workSlide={slide.workSlide}
+                elementsList={slide.elementsList}
+            ></PresentationSlideList>
+        </div>
     )
     return (
         <div>
             <div className={styles.header}>
-                <img className={styles.logo} src={props.logo}></img>
+                <img className={styles.logo} src={presentation.logo}></img>
                 <div>
-                    <p className={styles.name}>{props.name}</p>
+                    <p className={styles.name}>{presentation.name}</p>
                     <Navbar />
-                    
                 </div>
             </div>
+            <button onClick={() => ChangePresentation(presentation = AddSlide(presentation, titleSlide))}>Добавить слайд</button>
+            <button onClick={() => ChangePresentation(presentation = AddTextElement(presentation, titleText))}>Добавить текст</button>
+            <button>Добавить картинку</button>
+            <button>Добавить круг</button>
             <Toolbar />
             <div className={styles.area}>
                 <div className={styles.border}>

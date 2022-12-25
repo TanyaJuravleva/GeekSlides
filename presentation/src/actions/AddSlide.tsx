@@ -1,4 +1,3 @@
-import { Provider } from 'react-redux'
 import { Presentation } from '../types/Presentation'
 import { Slide } from '../types/Slide'
 import { Editor } from '../types/Editor'
@@ -6,112 +5,39 @@ import { Size, Coordinates } from '../types/SizeCoordinates'
 import { Triangle, Circle, Rectangle } from '../types/Figures'
 import { TextElement, PictureElement } from '../types/SlideElements'
 
-function findIndexSlideById(presentation: Presentation, idSlide: string): number  //ВОЗВРАЩАЕТ ИНДЕКС СЛАЙДА В МАССИВЕ СЛАЙДОВ ПРЕЗЕНТАЦИИ
-{
-    return presentation.slides.findIndex( (slide) => slide.id === idSlide)
-}
-
-function findSlideByIndex(presentation: Presentation, indexSlide: number): Slide  //ВОЗВРАЩАЕТ СЛАЙД ПО ИНДЕКСУ
-{
-    return presentation.slides[indexSlide]
-}
-
-function presentationWithChangedSlide(presentation: Presentation, changeSlide: Slide, indexSlide: number):Presentation  //ВОЗВРАЩАЕТ ПРЕЗЕНТАЦИЮ С ИЗМЕНЕННЫМ СЛАЙДОМ
-{
-    return {
-        ...presentation,
-        slides:[
-            ...presentation.slides.slice(0, indexSlide - 1),
-            changeSlide,
-            ...presentation.slides.slice(indexSlide + 1)
-        ]
-    }
-}
-
-function findIndexSlideElementBySlide(slide: Slide, idElement: string): number //ВОЗВРАЩАЕТ ИНДЕКС ЭЛЕМЕНТА СЛАЙДА
-{
-    return slide.elementsList.findIndex( (element) => element.id === idElement)
-}
-
-function findIndexSlideTextFieldBySlide(slide: Slide, idElement: string): number //ВОЗВРАЩАЕТ ИНДЕКС ТЕКСТОВОГО ЭЛЕМЕНТА
-{
-    return slide.elementsList.findIndex( (element) => ((element.id === idElement) && (element.type = 'text')))
-}
-
-function findSlideElementByIndex(slide: Slide, index: number): TextElement | PictureElement | Circle | Rectangle | Triangle //ВОЗВРАЩАЕТ ЭЛЕМЕНТ ПО ИНДЕКСУ
-{
-    return slide.elementsList[index]
-}
-
-/* ФУНКЦИИ РАБОТЫ С ЭДИТОРОМ И ПРЕЗЕНТАЦИЕЙ */
-
-function changePresentationName(editor: Editor, name: string): Editor //ИЗМЕНЯЕТ НАЗВАНИЕ ПРЕЗЕНТАЦИИ +
-{
-    return {
-      ...editor,
-      presentation: {
-        ...editor.presentation,
-        name,
-      },
-    };
-}
-
-function stopDemonstration(editor: Editor): Editor //ПОКАЗ СЛАЙДОВ +
-{
-    return {
-      ...editor,
-      isPreview: false,
-    };
-}
-
-function savePresentation(editor: Editor): void //СОХРАНЕНИЕ ПРЕЗЕНТАЦИИ +
-{
-    return 
-}
-
-function deletePresentation(editor: Editor) //УДАЛЕНИЕ ПРЕЗЕНТАЦИИ +
-{
-    return 
-}
-
-function openPresentation(editor: Editor, src: string): void //ОТКРЫТИЕ ПРЕЗЕНТАЦИИ +
-{
-    return 
-}
-
-
 /* ФУНКЦИИ РАБОТЫ СО СЛАЙДОМ И ЕГО ЭЛЕМЕНТАМИ */
 
-function selectSlides(presentation: Presentation, ids: string[]): Presentation //ИЗМЕНЯЕТ ВЫДЕЛЕННЫЕ СЛАЙДЫ +
-{
-    presentation.selectedCollection = []
-    for(let i = 0; i < ids.length; i++)
-    {
-        let indexSlide = findIndexSlideById(presentation, ids[i]);
-        let slide = findSlideByIndex(presentation, indexSlide);
-        let idsElement:string[] = []
-        for (let i = 0; i < slide.elementsList.length; i++)
-        {
-            let id = slide.elementsList[i].id
-            idsElement.splice(idsElement.length, 0, id);
-        }
-        presentation.selectedCollection.splice(presentation.selectedCollection.length, 0, {selectedSlideId: ids[i], selectedElementsIds: idsElement})
-    }
-    return presentation
-}
+// function selectSlides(presentation: Presentation, ids: string[]): Presentation //ИЗМЕНЯЕТ ВЫДЕЛЕННЫЕ СЛАЙДЫ +
+// {
+//     presentation.selectedCollection = []
+//     for(let i = 0; i < ids.length; i++)
+//     {
+//         let indexSlide = findIndexSlideById(presentation, ids[i]);
+//         let slide = findSlideByIndex(presentation, indexSlide);
+//         let idsElement:string[] = []
+//         for (let i = 0; i < slide.elementsList.length; i++)
+//         {
+//             let id = slide.elementsList[i].id
+//             idsElement.splice(idsElement.length, 0, id);
+//         }
+//         presentation.selectedCollection.splice(presentation.selectedCollection.length, 0, {selectedSlideId: ids[i], selectedElementsIds: idsElement})
+//     }
+//     return presentation
+// }
 
-function addSlide(presentation: Presentation, newSlide: Slide): Presentation //ДОБАВЛЕНИЕ НОВОГО СЛАЙДА +
+function AddSlide(presentation: Presentation, newSlide: Slide): Presentation //ДОБАВЛЕНИЕ НОВОГО СЛАЙДА +
 { 
+    const slides = presentation.slides.map((slide) =>{return slide = {...slide, workSlide:false}})
     return {
         ...presentation,
         slides: [
-            ...presentation.slides,
+            ...slides,
             newSlide
         ],
     };
 }
 
-export {addSlide};
+export {AddSlide};
 // function deleteSlides(presentation: Presentation): Presentation //УДАЛЕНИЕ ВЫДЕЛЕННЫХ СЛАЙДОВ +
 // {
 //     let idsCollection = presentation.selectedCollection;
@@ -157,20 +83,6 @@ export {addSlide};
 //             selectedElementsIds: ids,
 //         }]
 //     }
-// }
-
-// function addTextElement(presentation: Presentation, idSlide: string, newTextElement: TextElement): Presentation //ДОБАВЛЕНИЕ ТЕКСТОВОГО ЭЛЕМЕНТА НА СЛАЙД +
-// {
-//     const indexSlide = findIndexSlideById(presentation, idSlide)
-//     const slide = findSlideByIndex(presentation, indexSlide)
-//     const changeSlide = { 
-//         ...slide,
-//         elementsList: [
-//             ...slide.elementsList,
-//             newTextElement
-//         ]
-//     }
-//     return presentationWithChangedSlide(presentation, changeSlide, indexSlide)
 // }
 
 // function addPictureElement(presentation: Presentation, idSlide: string, newPictureElement: PictureElement): Presentation //ДОБАВЛЕНИЕ КАРТИНКИ НА СЛАЙД +

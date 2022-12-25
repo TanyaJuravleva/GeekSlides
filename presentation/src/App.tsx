@@ -5,6 +5,7 @@ import {Circle, Rectangle, Triangle} from './types/Figures'
 import {Slide} from './types/Slide'
 import logo from './images/logo.svg';
 import cat from './images/slides/cat.jpg'
+import { StartPresentation } from './states/StartPresentation';
 
 const textField:TextElement = {
   id: 'text1',
@@ -81,10 +82,10 @@ const CollectionSlides = [
 function App() {
   return (
     <PresentationPreview
-      name='My Presentation'
-      logo={logo}
-      slides={slidesList}
-      selectedCollection={CollectionSlides}
+      name={StartPresentation.name}
+      logo={StartPresentation.logo}
+      slides={StartPresentation.slides}
+      selectedCollection={StartPresentation.selectedCollection}
     ></PresentationPreview>
   );
 }

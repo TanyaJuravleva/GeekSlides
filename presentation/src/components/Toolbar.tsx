@@ -5,8 +5,8 @@ import undo from './../images/toolbar/undo.png'
 import redo from './../images/toolbar/redo.png'
 import plus from './../images/toolbar/plus.png'
 import styles from './../css/Types.module.css'
-import { addSlide } from '../actionsCreators/AddSlide';
-import { TitleSlide } from '../states/TitleSlide';
+import { AddSlide } from '../actions/AddSlide';
+import { titleSlide } from '../states/TitleSlide';
 import { Presentation } from '../types/Presentation';
 import { StartPresentation } from '../states/StartPresentation';
 

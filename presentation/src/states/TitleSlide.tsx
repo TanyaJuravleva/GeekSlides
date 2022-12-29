@@ -1,12 +1,16 @@
 import { generateKey } from 'crypto'
-import React from 'react'
+import React, { useState } from 'react'
 import { Slide } from '../types/Slide'
 
-const titleSlide:Slide = {
-    id: Math.random().toString(),
-    backgroundColor: 'white',
-    workSlide: true,
-    elementsList: [],
+function TitleSlide(id: number)
+{
+    let titleSlide:Slide = {
+        id: id.toString(),
+        backgroundColor: 'white',
+        workSlide: true,
+        elementsList: [],
+    }
+    return titleSlide
 }
 
-export {titleSlide}
+export {TitleSlide}

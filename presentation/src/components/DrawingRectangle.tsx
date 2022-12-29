@@ -10,8 +10,8 @@ function DrawingRectangle(props:Rectangle) {
         height: props.size.height + 2*props.borderWidth,
     }
     return (
-        <svg className={styles.element} style={RectangleStyle}>
-            <rect
+        <svg className={styles.element} style={RectangleStyle} key={props.id}>
+            <rect key={props.id}
                 width={props.size.width}
                 height={props.size.height}
                 x={props.borderWidth/2}

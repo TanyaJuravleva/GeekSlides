@@ -23,8 +23,9 @@ function DrawingTriangle(props:Triangle) {
     const y3:string = String(props.size.height + props.borderWidth)
     const Points:string = `${x1},${y1} ${x2},${y2} ${x3},${y3}`;
     return (
-        <svg className={styles.element} style={TriangleStyle}>
-            <polygon points={Points}                     
+        <svg className={styles.element} style={TriangleStyle} key={props.id}>
+            <polygon key={props.id} 
+                    points={Points}                     
                     stroke={props.borderColor}
                     fill={props.fillColor}
                     strokeWidth={props.borderWidth}/>

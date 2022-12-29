@@ -34,8 +34,8 @@ function DrawingTextElement(props:TextElement) {
         textDecoration: Underlined,
     }
     return (
-        <div id={props.id} style={WorkTextStyle} className={styles.element}>
-            <p style={WorkText}>{props.text}</p>
+        <div id={props.id} style={WorkTextStyle} className={styles.element} key={props.id}>
+            <p style={WorkText} key={props.id}>{props.text}</p>
         </div>
     )
 }

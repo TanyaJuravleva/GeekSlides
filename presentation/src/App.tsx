@@ -82,10 +82,11 @@ const CollectionSlides = [
 function App() {
   return (
     <PresentationPreview
-      name={StartPresentation.name}
-      logo={StartPresentation.logo}
-      slides={StartPresentation.slides}
-      selectedCollection={StartPresentation.selectedCollection}
+      name={StartPresentation(0).name}
+      logo={StartPresentation(0).logo}
+      slides={StartPresentation(0).slides}
+      selectedCollection={StartPresentation(0).selectedCollection}
+      id={StartPresentation(0).id}
     ></PresentationPreview>
   );
 }

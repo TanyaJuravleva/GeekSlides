@@ -10,8 +10,8 @@ function DrawingCircle(props:Circle) {
         height: props.size.height + 2*props.borderWidth
     }
     return (
-        <svg className={styles.element} style={CircleStyle}>
-            <ellipse rx={props.size.width/2 + props.borderWidth/2} ry={props.size.height/2 + props.borderWidth/2} cx={props.size.width/2 + props.borderWidth} cy={props.size.height/2 + props.borderWidth}
+        <svg className={styles.element} style={CircleStyle} key={props.id}>
+            <ellipse key={props.id} rx={props.size.width/2 + props.borderWidth/2} ry={props.size.height/2 + props.borderWidth/2} cx={props.size.width/2 + props.borderWidth} cy={props.size.height/2 + props.borderWidth}
                     stroke={props.borderColor}
                     fill={props.fillColor}
                     strokeWidth={props.borderWidth}

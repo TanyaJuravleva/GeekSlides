@@ -7,7 +7,7 @@ import {Navbar} from './NavBar'
 import { Toolbar } from './Toolbar'
 import { useState } from 'react'
 
-import { titleSlide } from '../states/TitleSlide'
+import { TitleSlide } from '../states/TitleSlide'
 import { titleText } from '../states/TitleText'
 
 import { AddSlide } from '../actions/AddSlide'
@@ -16,14 +16,8 @@ import { ChangeWorkSlide } from '../actions/ChangeWorkSlide'
 
 function PresentationPreview(props: Presentation) {
     let [presentation, ChangePresentation] = useState(props);
+    let [idSlide, ChangeSlideId] = useState(0)
     const Slides:Array<Slide> = presentation.slides;
-    const workSlideData = Slides.find(slide => slide.workSlide) as Slide
-    const workSlide = <WorkSlide
-        id={workSlideData.id}
-        backgroundColor={workSlideData.backgroundColor}
-        workSlide={workSlideData.workSlide}
-        elementsList={workSlideData.elementsList}
-    />
     const SlidesList = Slides.map((slide) =>
         <div onClick={() => ChangePresentation(presentation = ChangeWorkSlide(presentation, slide.id))}>
             <PresentationSlideList
@@ -34,16 +28,23 @@ function PresentationPreview(props: Presentation) {
             ></PresentationSlideList>
         </div>
     )
+    const workSlideData = Slides.find(slide => slide.workSlide) as Slide
+    const workSlide = <WorkSlide
+        id={workSlideData.id}
+        backgroundColor={workSlideData.backgroundColor}
+        workSlide={workSlideData.workSlide}
+        elementsList={workSlideData.elementsList}
+    />
     return (
-        <div>
+        <div key={props.id}>
             <div className={styles.header}>
                 <img className={styles.logo} src={presentation.logo}></img>
                 <div>
-                    <p className={styles.name}>{presentation.name}</p>
+                    <p key={props.id} className={styles.name}>{presentation.name}</p>
                     <Navbar />
                 </div>
             </div>
-            <button onClick={() => ChangePresentation(presentation = AddSlide(presentation, titleSlide))}>Добавить слайд</button>
+            <button onClick={() =>{ ChangeSlideId(idSlide = idSlide + 1); ChangePresentation(presentation = AddSlide(presentation, TitleSlide(idSlide)))} }>Добавить слайд</button>
             <button onClick={() => ChangePresentation(presentation = AddTextElement(presentation, titleText))}>Добавить текст</button>
             <button>Добавить картинку</button>
             <button>Добавить круг</button>

@@ -26,7 +26,7 @@ function PresentationWithChangedSlide(presentation: Presentation, changeSlide: S
     return {
         ...presentation,
         slides:[
-            ...presentation.slides.slice(0, indexSlide - 1),
+            ...presentation.slides.slice(0, indexSlide),
             changeSlide,
             ...presentation.slides.slice(indexSlide + 1)
         ]

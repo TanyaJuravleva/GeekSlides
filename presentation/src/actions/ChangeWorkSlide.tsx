@@ -1,10 +1,9 @@
 import { Presentation } from '../types/Presentation'
-import { Slide } from '../types/Slide';
 import { FindSlideByIndex, FindIndexSlideById, PresentationWithChangedSlide } from './CommonFunctions';
 
 function ChangeWorkSlide(presentation: Presentation, idSlide: string): Presentation
 {
-    presentation.slides.map((slide) => slide = { ...slide, workSlide:false})
+    presentation.slides.map((slide) => slide.workSlide = false)
     const indexSlide = FindIndexSlideById(presentation, idSlide)
     const slide = FindSlideByIndex(presentation, indexSlide)
     const changeSlide = {
@@ -15,3 +14,12 @@ function ChangeWorkSlide(presentation: Presentation, idSlide: string): Presentat
 }
 
 export {ChangeWorkSlide}
+
+    // return {
+    //     ...presentation,
+    //     slides:[
+    //         ...presentation.slides.slice(0, indexSlide),
+    //         changeSlide,
+    //         ...presentation.slides.slice(indexSlide + 1)
+    //     ]
+    // }

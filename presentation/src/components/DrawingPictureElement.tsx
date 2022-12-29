@@ -11,8 +11,8 @@ function DrawingPictureElement(props:PictureElement) {
         top: props.startingPoint.y
     }
     return (
-        <div id={props.id} className={styles.element} style={Picture}>
-           <img src={props.src} style={PictureStyle}></img>
+        <div id={props.id} className={styles.element} style={Picture} key={props.id}>
+           <img src={props.src} style={PictureStyle} key={props.id}></img>
         </div>
     )
 }

@@ -5,6 +5,7 @@ type BaseFigureElement = {
     id: string,
     startingPoint: Coordinates,
     fillColor: string,
+    //border: string,
     borderWidth: number,
     borderColor: string,
     size: Size,

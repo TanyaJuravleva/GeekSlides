@@ -1,10 +1,15 @@
 import { TextElement } from "../types/SlideElements"
 
-const titleText:TextElement = {
-    id: 'text1',
+function TitleText(idText:number)
+{
+  const titleText:TextElement = {
+    id: idText.toString(),
     type: 'text',
-    startingPoint: {x: 400, y: 50},
+    startingPoint: {x: 400, y: 100},
     size: {width: 290, height: 150},
+    border: 'dashed',
+    borderColor: 'grey',
+    borderWidth: 2,
     text: 'Заголовок',
     fontSize: 36,
     color: 'black',
@@ -16,5 +21,7 @@ const titleText:TextElement = {
     italic: false,
     underlined: false,
   }
+  return titleText
+}
 
-  export {titleText}
+  export {TitleText}

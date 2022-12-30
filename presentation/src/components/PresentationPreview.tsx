@@ -8,15 +8,24 @@ import { Toolbar } from './Toolbar'
 import { useState } from 'react'
 
 import { TitleSlide } from '../states/TitleSlide'
-import { titleText } from '../states/TitleText'
+import { TitleText } from '../states/TitleText'
+import { TitlePicture } from '../states/TitlePicture'
 
 import { AddSlide } from '../actions/AddSlide'
 import { AddTextElement } from '../actions/SlideElements/AddTextElement'
+import { AddPictureElement } from '../actions/SlideElements/AddPictureElement'
 import { ChangeWorkSlide } from '../actions/ChangeWorkSlide'
+import { AddCircle } from '../actions/SlideElements/AddCircle'
+import { TitleCircle } from '../states/TitleCircle'
+import { TitleTriangle } from '../states/TitleTriangle'
+import { AddTriangle } from '../actions/SlideElements/AddTriangle'
+import { TitleRectangle } from '../states/TitleRectangle'
+import { AddRectangle } from '../actions/SlideElements/AddRectangle'
 
 function PresentationPreview(props: Presentation) {
     let [presentation, ChangePresentation] = useState(props);
     let [idSlide, ChangeSlideId] = useState(0)
+    let [idElement, ChangeElementId] = useState(0)
     const Slides:Array<Slide> = presentation.slides;
     const SlidesList = Slides.map((slide) =>
         <div onClick={() => ChangePresentation(presentation = ChangeWorkSlide(presentation, slide.id))}>
@@ -45,9 +54,11 @@ function PresentationPreview(props: Presentation) {
                 </div>
             </div>
             <button onClick={() =>{ ChangeSlideId(idSlide = idSlide + 1); ChangePresentation(presentation = AddSlide(presentation, TitleSlide(idSlide)))} }>Добавить слайд</button>
-            <button onClick={() => ChangePresentation(presentation = AddTextElement(presentation, titleText))}>Добавить текст</button>
-            <button>Добавить картинку</button>
-            <button>Добавить круг</button>
+            <button onClick={() =>{ ChangeElementId(idElement = idElement + 1); ChangePresentation(presentation = AddTextElement(presentation, TitleText(idElement)))}}>Добавить текст</button>
+            <button onClick={() =>{ ChangeElementId(idElement = idElement + 1); ChangePresentation(presentation = AddPictureElement(presentation, TitlePicture(idElement)))}}>Добавить картинку</button>
+            <button onClick={() =>{ ChangeElementId(idElement = idElement + 1); ChangePresentation(presentation = AddCircle(presentation, TitleCircle(idElement)))}}>Добавить круг</button>
+            <button onClick={() =>{ ChangeElementId(idElement = idElement + 1); ChangePresentation(presentation = AddTriangle(presentation, TitleTriangle(idElement)))}}>Добавить триугольник</button>
+            <button onClick={() =>{ ChangeElementId(idElement = idElement + 1); ChangePresentation(presentation = AddRectangle(presentation, TitleRectangle(idElement)))}}>Добавить прямоугольник</button>
             <Toolbar />
             <div className={styles.area}>
                 <div className={styles.border}>

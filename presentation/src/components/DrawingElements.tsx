@@ -5,6 +5,7 @@ import {DrawingPictureElement} from './DrawingPictureElement'
 import {DrawingCircle} from './DrawingCircle'
 import {DrawingTriangle} from './DrawingTriangle'
 import {DrawingRectangle} from './DrawingRectangle'
+import { useState } from 'react'
 
 function DrawingElements(elementsList: Array<TextElement|PictureElement|Circle|Rectangle|Triangle>)
 {
@@ -32,17 +33,23 @@ function DrawingElements(elementsList: Array<TextElement|PictureElement|Circle|R
                     bold={element.bold}
                     italic={element.italic}
                     underlined={element.underlined}
+                    border={element.border}
+                    borderColor={element.borderColor}
+                    borderWidth={element.borderWidth}
                 ></DrawingTextElement>)
             }
             if (element.type === "picture")
             {
                 ElementsArray.push(
-                    <DrawingPictureElement
+                    <DrawingPictureElement 
                         id={element.id}
                         type={element.type}
                         src={element.src}
                         startingPoint={element.startingPoint}
                         size={element.size}
+                        border={element.border}
+                        borderColor={element.borderColor}
+                        borderWidth={element.borderWidth}
                     ></DrawingPictureElement>
                 )
             }

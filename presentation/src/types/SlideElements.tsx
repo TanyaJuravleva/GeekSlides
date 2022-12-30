@@ -5,6 +5,9 @@ type SlideElement = {
     id: string,
     startingPoint: Coordinates,
     size: Size,
+    border: string,
+    borderWidth: number,
+    borderColor: string,
 };
 
 type TextElement = SlideElement & {

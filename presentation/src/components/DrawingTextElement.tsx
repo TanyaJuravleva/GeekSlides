@@ -23,6 +23,9 @@ function DrawingTextElement(props:TextElement) {
         top: props.startingPoint.y,
         width: props.size.width,
         height: props.size.height,
+        border: props.border,
+        borderWidth: props.borderWidth,
+        borderColor: props.borderColor,
     }
     const WorkText = {
         background:props.fillText,
